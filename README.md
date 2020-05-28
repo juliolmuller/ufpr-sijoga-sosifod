@@ -16,3 +16,11 @@
 - Importe os projetos e seja feliz!!!
 
 :warning: *Vocês não devem ter problemas importando projetos, mas a criação de novos projetos parece ficar restrita à utilização de gerenciadores de dependências nessa versão do* NetBeans. *Eu criei os projetos com* **Maven**, *mas se vocês descobrirem como criar um projeto do jeito "clássico", compartilhe.*
+
+## Configuração do banco de dados e Hibernate
+
+Para fazer a configuração do banco de dados, crie os dois database (um para cada sistema) no PostgreSQL. Eu estou usando em minha máquina o `dac_sijoga` e o `dac_sosifod`.
+
+O arquivo de configuração do *Hibernate* usado pelo projeto **não é armazenada no repositório**, pois ele contém dados locais, como usuário e senha para conectar ao banco, que vai ser diferente para cada pessoa. Contudo, eucriei uma cópia com extensão `*.example`, que deve ser copiada e renomeada sem essa extensão. Aí, nesse arquivo `hibernate.cfg.xml` você deve inserir os dados do seu banco, por isso, verifique a URL da JDBC (inclusive o nome do banco) e as credenciais (usuário e senha) de acesso.
+
+O arquivo de exemplo está na pasta `<projeto>/src/main/resources`, e a cópia deve ser feita nessa pasta mesmo, que é onde o *Hibernate* vai buscar no momento que a aplicação iniciar.

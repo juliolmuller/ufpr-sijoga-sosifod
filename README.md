@@ -24,3 +24,5 @@ Para fazer a configuração do banco de dados, crie os dois database (um para ca
 O arquivo de configuração do *Hibernate* usado pelo projeto **não é armazenada no repositório**, pois ele contém dados locais, como usuário e senha para conectar ao banco, que vai ser diferente para cada pessoa. Contudo, eucriei uma cópia com extensão `*.example`, que deve ser copiada e renomeada sem essa extensão. Aí, nesse arquivo `hibernate.cfg.xml` você deve inserir os dados do seu banco, por isso, verifique a URL da JDBC (inclusive o nome do banco) e as credenciais (usuário e senha) de acesso.
 
 O arquivo de exemplo está na pasta `<projeto>/src/main/resources`, e a cópia deve ser feita nessa pasta mesmo, que é onde o *Hibernate* vai buscar no momento que a aplicação iniciar.
+
+**Não é necessário rodar scripts CREATE TABLE**. Com a propriedade `hibernate.hbm2ddl.auto` do *Hibernate* marcada como `create`, todo esquema de tabelas é recriado quando a aplicação é iniciada, a partir da configuração das classes-entidades.

@@ -16,5 +16,9 @@
         <mapping class="com.lacussoft.sijoga.model.Advogado" />
         <mapping class="com.lacussoft.sijoga.model.Juiz" />
         <mapping class="com.lacussoft.sijoga.model.Parte" />
+        <mapping class="com.lacussoft.sijoga.model.Process" />
+        <mapping class="com.lacussoft.sijoga.model.ProcessPhase" />
+        <mapping class="com.lacussoft.sijoga.model.ProcessPhaseAttachment" />
+        <mapping class="com.lacussoft.sijoga.model.ProcessPhaseResponse" />
     </session-factory>
 </hibernate-configuration>

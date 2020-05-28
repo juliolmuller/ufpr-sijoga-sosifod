@@ -15,11 +15,11 @@ public enum AccessRole {
     private AccessRole(Class role) {
         this.role = role;
     }
-    
+
     public Class asClass() {
         return role;
     }
-    
+
     public String getName() {
         String[] className = role.getName().split("\\.");
         return className[className.length - 1];

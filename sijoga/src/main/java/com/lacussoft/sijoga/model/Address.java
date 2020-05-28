@@ -9,19 +9,19 @@ public class Address implements Serializable {
 
     @Column(name = "cep", nullable = false, length = 8)
     private String zipCode;
-    
+
     @Column(name = "rua", nullable = false, length = 100)
     private String street;
-    
+
     @Column(name = "numero", nullable = false)
     private Integer number;
-    
+
     @Column(name = "complemento", length = 30)
     private String complement;
-    
+
     @Column(name = "cidade", nullable = false, length = 60)
     private String city;
-    
+
     @Column(name = "uf", nullable = false, length = 2)
     private String state;
 
@@ -35,7 +35,7 @@ public class Address implements Serializable {
         this.city = city;
         this.state = state;
     }
-    
+
     public String getZipCode() {
         return zipCode;
     }

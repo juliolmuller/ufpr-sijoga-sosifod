@@ -13,5 +13,8 @@
         <property name="hibernate.show_sql">true</property>
 
         <mapping class="com.lacussoft.sijoga.model.User" />
+        <mapping class="com.lacussoft.sijoga.model.Advogado" />
+        <mapping class="com.lacussoft.sijoga.model.Juiz" />
+        <mapping class="com.lacussoft.sijoga.model.Parte" />
     </session-factory>
 </hibernate-configuration>

@@ -32,17 +32,17 @@ public class AuthenticationBean implements Serializable {
         session.beginTransaction();
         session.save(user);
         session.getTransaction().commit();
-        
+
         return user;
     }
     
-    public User validate(String username, String password) {
+    public User validate(String login, String password) {
         String hashedPassword = SecurityUtil.encryptPassword(password);
-        String hql = "FROM User u WHERE u.name = :username AND u.password = :password";
+        String hql = "FROM User u WHERE u.cpf = :cpf AND u.password = :password";
         
         Query query = session.createQuery(hql);
         query.setString("password", hashedPassword);
-        query.setString("username", username);
+        query.setString("cpf", login);
         
         return (User) query.uniqueResult();
     }

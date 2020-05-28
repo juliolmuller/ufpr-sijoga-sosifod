@@ -1,6 +1,9 @@
 package com.lacussoft.sijoga.security;
 
 import com.lacussoft.sijoga.ejb.AuthenticationBean;
+import com.lacussoft.sijoga.model.Advogado;
+import com.lacussoft.sijoga.model.Juiz;
+import com.lacussoft.sijoga.model.Parte;
 import com.lacussoft.sijoga.model.User;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -20,10 +23,10 @@ public class DatabaseIdentityStore implements IdentityStore {
     
     @PostConstruct
     public void addDummyUsers() {
-        System.out.println("|||||||||| IDENTITY ||||||||||");
-        auth.createUser(new User("j", "j", "JUZ"));
-        auth.createUser(new User("a", "a", "ADV"));
-        auth.createUser(new User("p", "p", "PAR"));
+        System.out.println("Adicionando dados como teste...");
+        auth.createUser(new Juiz("j", "j"));
+        auth.createUser(new Advogado("a", "a"));
+        auth.createUser(new Parte("p", "p"));
     }
 
     @Override
@@ -38,7 +41,7 @@ public class DatabaseIdentityStore implements IdentityStore {
         if (user == null) {
             return CredentialValidationResult.INVALID_RESULT;
         }
-
+        
         return new CredentialValidationResult(username, Stream.of(user.getRole()).collect(Collectors.toSet()));
     }
 }

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
@@ -8,47 +9,60 @@
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>
             SIJOGA :: SIstema Jurídico Online para Grandes Administrações
         </title>
-        <style>
-            .container {
-                max-width: 960px;
-                margin: 20px auto;
-            }
-            th {
-                font-family: monospace;
-            }
-            td {
-                padding: 5px 10px;
-            }
-        </style>
+        <link rel="icon" type="imagem/png" href="resources/img/favicon.png" />
+        <h:outputStylesheet name="css/style.css" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.1.0/papaparse.min.js"></script>  
+        <h:outputScript name="js/script.js" />
     </h:head>
     <h:body>
         <div class="container">
-            <h1>SIJOGA</h1>
-            <h4>SIstema Jurídico Online para Grandes Administrações</h4>
-
-            <p><h:link value="Entrar no Sistema" outcome="sistema" /></p>
-            
-            Acessar como:
-            <table>
-                <tr>
-                    <td>JUÍZ</td>
-                    <td>usuário &amp; senha:</td>
-                    <th scope="row">j</th>
-                </tr>
-                <tr>
-                    <td>ADBOGADO</td>
-                    <td>usuário &amp; senha:</td>
-                    <th scope="row">a</th>
-                </tr>
-                <tr>
-                    <td>PARTE</td>
-                    <td>usuário &amp; senha:</td>
-                    <th scope="row">p</th>
-                </tr>
-            </table>
+            <div id="div-logo">
+                <h:graphicImage id="logo" name="img/logo.png" alt="Logo do sistema" />
+                <div class="flex-between">
+                    <div id="usuario">
+                        Bem vindo, #{userBean.name}
+                    </div>
+                    <h:form prependId="false">
+                        <h:commandButton id="btn-logout" value="Logout" action="#{loginBean.logout()}" />
+                    </h:form>
+                </div>
+                <div id="filtros">
+                    <div id="div-filtro-situacao" style="display: inline-block;">
+                        Situação:
+                        <select class="filtro" id="filtro-situacao">
+                            <option>Todos</option>
+                            <option>Em aberto</option>
+                            <option>Encerrado</option>
+                        </select>
+                    </div>
+                    <div id="div-filtro-parte" style="display: inline-block;">
+                        Parte:
+                        <select class="filtro" id="filtro-parte">
+                            <option>Todos</option>
+                            <option>Promovido</option>
+                            <option>Promovente</option>
+                        </select>
+                    </div> 
+                    <div id="div-filtro-conclusao" style="display: inline-block;">
+                        Conslusão: 
+                        <select class="filtro" id="filtro-conclusao">
+                            <option>Todos</option>
+                            <option>Ganhou</option>
+                            <option>Perdeu</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="div_itens">
+                <ul id="lista"></ul>     
+            </div>
+            <div></div>
         </div>
+        <h:button id="novo-processo" value="+ Novo Processo" outcome="processo" />
     </h:body>
 </html>

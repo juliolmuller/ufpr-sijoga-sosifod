@@ -1,0 +1,31 @@
+<!DOCTYPE html>   
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> 
+    <script src="login.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@480&display=swap" rel="stylesheet">
+    <link rel="icon" type="imagem/png" href="icon.png" />
+    <title>SIJOGA - Sistema Jurídico On-line para Grandes Administrações</title>
+  </head>
+  <body>
+    <div class="container">
+      <div id="div_logo">
+        <img src="logo_sijoga.png" id="logo">
+      </div>
+      <div id="div-login">
+        <form action="processos.html" method="get" name="login-form" id="login-form">
+        <select id="filtro-login" onchange="logar(this);" name="tipo">
+            <option>Advogado</option>
+            <option>Juiz</option>
+            <option>Parte</option>
+          </select>
+        <div style="margin-bottom: 15px;">Login:<br><input type="text" class="login" name="login"></div>
+        <div>Senha:<br><input type="password" class="login" name="senha"></div>
+        <input type="submit" id="btn_login" value="Login">
+      </div>
+    </div>
+   </body>
+</html>

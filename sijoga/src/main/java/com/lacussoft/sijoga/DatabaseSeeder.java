@@ -30,6 +30,6 @@ public class DatabaseSeeder extends HttpServlet {
         auth.createUser(new Juiz("j", "j"));
         auth.createUser(new Advogado("a", "a"));
         auth.createUser(new Parte("p", "p"));
-        System.out.println("Populamento de usuários completo.");
+        System.out.println("    Populamento de usuários completo.");
     }
 }

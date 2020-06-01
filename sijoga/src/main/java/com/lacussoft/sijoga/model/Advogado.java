@@ -1,9 +1,13 @@
 package com.lacussoft.sijoga.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 
 @Entity
 public class Advogado extends User {
+
+    @Column(name = "insc_oab", length = 10, unique = true)
+    private String oab;
 
     // TODO: remover construtores
     public Advogado() {}
@@ -16,5 +20,14 @@ public class Advogado extends User {
             "80610150", "Rua das Flores", 753,
             "Apartamento 65", "Curitiba", "PR"
         ));
+        oab = "12345";
+    }
+
+    public String getOab() {
+        return oab;
+    }
+
+    public void setOab(String oab) {
+        this.oab = oab;
     }
 }

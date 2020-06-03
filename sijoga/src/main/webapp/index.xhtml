@@ -26,7 +26,7 @@
                 <h:graphicImage id="logo" name="img/logo.png" alt="Logo do sistema" />
                 <div class="flex-between">
                     <div id="usuario">
-                        Bem vindo, <h:outputText value="#{sessionBean.user.name}" />
+                        Bem vindo, <h:outputText value="#{sessionScope.user.name}" />
                     </div>
                     <h:form prependId="false">
                         <h:commandButton id="btn-logout" value="Logout" action="#{loginBean.logout()}" />

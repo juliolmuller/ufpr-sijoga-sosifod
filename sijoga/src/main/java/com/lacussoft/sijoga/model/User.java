@@ -36,7 +36,7 @@ public abstract class User implements Serializable {
     @Embedded
     private Address address;
 
-    public static User getInstanceOf(AccessRole role) {
+    public static User create(AccessRole role) {
         try {
             return (User) role.asClass().newInstance();
         } catch (IllegalAccessException | InstantiationException | NullPointerException ex) {

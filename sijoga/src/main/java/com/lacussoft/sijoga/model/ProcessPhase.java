@@ -5,13 +5,13 @@ import java.util.Date;
 import java.util.Set;
 import java.util.TreeSet;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -37,8 +37,7 @@ public class ProcessPhase implements Comparable<ProcessPhase>, Serializable {
     @OneToMany(mappedBy = "processPhase")
     private Set<ProcessPhaseAttachment> attachments = new TreeSet<>();
 
-    @OneToOne
-    @JoinColumn(name = "resposta")
+    @Embedded
     private ProcessPhaseResponse response;
 
     @ManyToOne

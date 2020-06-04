@@ -1,19 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@480&display=swap');
 
+html {
+    font-family: 'Quicksand', sans-serif;
+}
+
 body {
     width: 100%;
     margin: 0px;
     background-color: #e6e6fa;
 }
 
-html {
-    font-family: 'Quicksand', sans-serif;
-}
-
-.container {
-}
-
-#div-logo {
+.header {
     display: block;
     position: fixed;
     background-color: #e6e6fa;
@@ -25,6 +22,12 @@ html {
     -webkit-box-shadow: 0px -1px 30px 0px rgba(170, 170, 170, 0.43);
     -moz-box-shadow: 0px -1px 30px 0px rgba(170, 170, 170, 0.43);
     box-shadow: 0px -1px 30px 0px rgba(170, 170, 170, 0.43);
+}
+
+.header-logo {
+    float: left;
+    width: 300px;
+    padding-left: 15px;
 }
 
 .div-itens {
@@ -39,45 +42,55 @@ html {
     padding: 0px 25px 25px 25px;
     margin-top: 76px;
 }
+
 .item {
     display: block;
     align-items: center;
     padding: 12px;
 }
+
 .item-info {
     padding-bottom: 2px;
 }
+
 .descricao {
     font-size: 14px;
     margin-top: 5px;
     text-align: justify;
 }
+
 .situacao {
     font-size: 14px;
     display: block;
     float: right;
     font-weight: bold;
 }
+
 .fase {
     font-size: 12px;
     display: block;
     float: right;
 }
+
 .partes {
     display: block;
     font-size: 14px;
     margin-bottom: 2px;
 }
+
 .parte {
     display: block-inline;
 }
+
 .num {
     margin-bottom: 30px;
 }
+
 .juiz {
     display: block-inline;
     font-size: 14px;
 }
+
 .filtro {
     background: none;
     appearance: none;
@@ -106,7 +119,7 @@ html {
     outline: 0;
 }
 
-#usuario {
+.user-welcome {
     display: block;
     float: left;
     padding-left: 30px;
@@ -121,12 +134,6 @@ html {
     padding-top: 12px;
 }
 
-#logo {
-    float: left;
-    width: 300px;
-    padding-left: 15px;
-}
-
 #filtros {
     margin-left: 30px;
     margin-top: -12px;
@@ -135,7 +142,7 @@ html {
     font-size: 14px;
 }
 
-#div-login {
+.login-container {
     font-size: 18px;
     position: absolute;
     left: 50%;
@@ -143,7 +150,12 @@ html {
     margin-right: -50%;
     transform: translate(-50%, -50%);
 }
-.login {
+
+.login-form-label {
+    display: block;
+}
+
+.login-form-control {
     font-family: 'Quicksand', sans-serif;
     font-size: 16px;
     transition: width 0.5s ease-in-out;
@@ -158,10 +170,12 @@ html {
     outline: 0;
     border-bottom: 1px solid #555;
 }
-.login:focus {
+
+.login-form-control:focus {
     width: 250px;
 }
-#btn-login {
+
+.login-form-submit {
     position: relative;
     display: flex;
     justify-content: center;
@@ -181,23 +195,6 @@ html {
     outline: 0;
 }
 
-#filtro-login {
-    position: relative;
-    display: block;
-    appearance: none;
-    padding: 10px;
-    border: none;
-    font-family: 'Quicksand', sans-serif;
-    font-size: 16px;
-    border: 0px;
-    outline: none;
-    background: none;
-    top: 50px;
-    left: 50%;
-    margin-right: -50%;
-    margin-bottom: 50px;
-    transform: translate(-50%, -50%);
-}
 #novo-processo {
     position: fixed;
     display: flex;
@@ -218,17 +215,17 @@ html {
 }
 
 @media only screen and (max-width: 700px) and (min-width: 360px) {
+    
     body {
         width: 100%;
     }
-    #logo {
+    
+    .header-logo {
         width: 50%;
         padding-left: 8px;
         padding-top: 12px;
     }
 
-    #div-logo {
-    }
     .div-itens {
         margin: 0 auto;
         margin-bottom: 30px;
@@ -237,7 +234,8 @@ html {
         min-height: 100vh;
         padding: 0px 10px 10px 10px;
     }
-    #usuario {
+    
+    .user-welcome {
         text-align: right;
         float: right;
         margin-right: 15px;
@@ -245,6 +243,7 @@ html {
         margin-top: 5px;
         width: 30%;
     }
+    
     .filtro {
         display: block-inline;
         margin-right: 5px;
@@ -252,12 +251,14 @@ html {
         font-size: 12px;
         border-bottom: 0.5px #000 solid;
     }
+    
     #filtros {
         font-size: 12px;
         margin: 12px;
         margin-right: 0px;
         float: right;
     }
+    
     #btn-logout {
         display: flex;
         float: right;
@@ -270,9 +271,4 @@ html {
         margin-top: 5px;
         font-size: 10px;
     }
-}
-
-.flex-between {
-    display: flex;
-    justify-content: space-between;
 }

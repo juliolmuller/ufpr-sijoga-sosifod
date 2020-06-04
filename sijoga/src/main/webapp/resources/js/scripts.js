@@ -4,11 +4,11 @@
     var usuario = 'Josnei';
 
     function init() {
-        Papa.parse(publicSpreadsheetUrl, {
-            download: true,
-            header: true,
-            complete: showInfo
-        });
+//        Papa.parse(publicSpreadsheetUrl, {
+//            download: true,
+//            header: true,
+//            complete: showInfo
+//        });
     }
 
     function showInfo(data, tabletop) {

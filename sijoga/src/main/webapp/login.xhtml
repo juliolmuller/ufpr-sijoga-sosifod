@@ -17,12 +17,12 @@
                     </div>
                 </h:panelGroup>
                 <div class="mt-3">
-                    <h:outputLabel for="login" value="CPF:" styleClass="login-form-label" />
-                    <h:inputText id="login" value="#{loginBean.cpf}" styleClass="login-form-control" pt:autofocus="true" />
+                    <h:outputLabel for="cpf" value="CPF:" styleClass="login-form-label" />
+                    <h:inputText id="cpf" value="#{loginBean.cpf}" styleClass="login-form-control" pt:autofocus="true" />
                 </div>
                 <div class="mt-3">
-                    <h:outputLabel for="login" value="Senha:" styleClass="login-form-label" />
-                    <h:inputSecret value="#{loginBean.password}" styleClass="login-form-control" />
+                    <h:outputLabel for="password" value="Senha:" styleClass="login-form-label" />
+                    <h:inputSecret id="password" value="#{loginBean.password}" styleClass="login-form-control" />
                 </div>
                 <h:commandButton styleClass="login-form-submit" value="Login" action="#{loginBean.login()}" />
             </h:form>

@@ -1,6 +1,6 @@
 package com.lacussoft.sijoga.bean;
 
-import com.lacussoft.sijoga.ejb.AuthenticationBean;
+import com.lacussoft.sijoga.security.AuthenticationBean;
 import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;

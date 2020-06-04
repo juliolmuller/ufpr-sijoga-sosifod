@@ -1,6 +1,5 @@
 package com.lacussoft.sijoga.security;
 
-import com.lacussoft.sijoga.ejb.AuthenticationBean;
 import com.lacussoft.sijoga.model.User;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -35,7 +34,7 @@ public class DatabaseIdentityStore implements IdentityStore {
         if (user == null) {
             return CredentialValidationResult.INVALID_RESULT;
         }
-        
+
         HttpSession session = (HttpSession) externalContext.getSession(true);
         session.setAttribute("user", user);
 

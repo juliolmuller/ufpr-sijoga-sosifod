@@ -1,6 +1,6 @@
 package com.lacussoft.sijoga;
 
-import com.lacussoft.sijoga.ejb.AuthenticationBean;
+import com.lacussoft.sijoga.security.AuthenticationBean;
 import com.lacussoft.sijoga.model.Advogado;
 import com.lacussoft.sijoga.model.Juiz;
 import com.lacussoft.sijoga.model.Parte;

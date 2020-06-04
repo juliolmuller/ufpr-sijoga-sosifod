@@ -1,4 +1,4 @@
-package com.lacussoft.sijoga.ejb;
+package com.lacussoft.sijoga.security;
 
 import com.lacussoft.utils.HibernateUtil;
 import com.lacussoft.sijoga.model.User;
@@ -6,7 +6,7 @@ import com.lacussoft.utils.SecurityUtil;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import javax.ejb.Singleton;
+import javax.ejb.Stateless;
 import javax.faces.context.ExternalContext;
 import javax.inject.Inject;
 import javax.security.enterprise.AuthenticationStatus;
@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
-@Singleton
+@Stateless
 public class AuthenticationBean implements Serializable {
 
     private Session session;

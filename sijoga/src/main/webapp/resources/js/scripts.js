@@ -1,4 +1,7 @@
-(function() {
+$(function() {
+    
+    $('.mask-cpf').mask('000.000.000-00', {reverse: true});
+    
     var publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSIMqKwalYJtmvTwYi8ximHRZdOl2QBBlB5MIaWxwhXVBR5E_iiipj_z1xNVhiqjsljyK8XqL3Zj3ri/pub?gid=0&single=true&output=csv';
     var tipo = 'Advogado';
     var usuario = 'Josnei';
@@ -129,4 +132,4 @@
     }
 
     window.addEventListener('DOMContentLoaded', init);
-})()
+});

@@ -1,6 +1,7 @@
 package com.lacussoft.sijoga.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Embedded;
@@ -10,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "tb_usuarios")
@@ -32,6 +35,10 @@ public abstract class User implements Serializable {
 
     @Column(nullable = false)
     private String email;
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "data_nasc", nullable = false)
+    private Date dateOfBirth;
 
     @Embedded
     private Address address;
@@ -87,6 +94,14 @@ public abstract class User implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(Date date) {
+        this.dateOfBirth = date;
     }
 
     public Address getAddress() {

@@ -27,9 +27,9 @@ public class DatabaseSeeder extends HttpServlet {
 
     private void seedUsers() {
         System.out.println("    Populando usuários...");
-        auth.createUser(new Juiz("j", "j"));
-        auth.createUser(new Advogado("a", "a"));
-        auth.createUser(new Parte("p", "p"));
+        auth.createUser(new Juiz("1", "1"));
+        auth.createUser(new Advogado("2", "2"));
+        auth.createUser(new Parte("3", "3"));
         System.out.println("    Populamento de usuários completo.");
     }
 }

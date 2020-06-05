@@ -1,6 +1,7 @@
 package com.lacussoft.sijoga.bean;
 
 import com.lacussoft.sijoga.security.AuthenticationBean;
+import com.lacussoft.utils.Converter;
 import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
@@ -41,7 +42,7 @@ public class LoginBean implements Serializable {
     }
 
     public void setCpf(String cpf) {
-        this.cpf = cpf;
+        this.cpf = Converter.removeNonDigits(cpf);
     }
 
     public String getPassword() {

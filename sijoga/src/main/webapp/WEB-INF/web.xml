@@ -8,6 +8,10 @@
         <param-name>javax.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE</param-name>
         <param-value>true</param-value>
     </context-param>
+    <context-param>
+        <param-name>javax.faces.INTERPRET_EMPTY_STRING_SUBMITTED_VALUES_AS_NULL</param-name>
+        <param-value>true</param-value>
+    </context-param>
     <servlet>
         <servlet-name>DatabaseSeeder</servlet-name>
         <servlet-class>com.lacussoft.sijoga.DatabaseSeeder</servlet-class>
@@ -26,6 +30,7 @@
         <web-resource-collection>
             <web-resource-name>public</web-resource-name>
             <url-pattern>/login.xhtml</url-pattern>
+            <url-pattern>/cadastro.xhtml</url-pattern>
             <url-pattern>/resources/*</url-pattern>
             <url-pattern>/javax.faces.resource/*</url-pattern>
         </web-resource-collection>

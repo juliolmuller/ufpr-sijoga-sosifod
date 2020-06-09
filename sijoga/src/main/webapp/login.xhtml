@@ -2,32 +2,42 @@
 
 <ui:composition template="templates/layout.xhtml"
         xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:f="http://xmlns.jcp.org/jsf/core"
-    	xmlns:h="http://xmlns.jcp.org/jsf/html"
-    	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-    	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	      xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
         xmlns:p="http://primefaces.org/ui">
 
     <ui:define name="content">
         <h:panelGroup rendered="#{param['error']}">
             <script defer="true" type="text/javascript">
                 $(function() {
-                    toastr.error('Credenciais inválidas');
+                    toastr.error('Credenciais inválidas.');
                 });
             </script>
         </h:panelGroup>
+        <ui:repeat var="msg" value="#{facesContext.messageList}">
+            <script defer="true" type="text/javascript">
+                $(function() {
+                    toastr.error('#{msg.detail}');
+                });
+            </script>
+        </ui:repeat>
 
         <div class="login-container">
             <h:form id="login-form" prependId="false">
                 <div class="mt-3">
                     <h:outputLabel for="cpf" value="CPF:" styleClass="login-form-label" />
                     <h:inputText id="cpf" value="#{loginBean.cpf}" styleClass="login-form-control mask-cpf" pt:autofocus="true">
+                        <f:validateRequired />
                         <f:converter converterId="numbersOnly" />
                     </h:inputText>
                 </div>
                 <div class="mt-3">
                     <h:outputLabel for="password" value="Senha:" styleClass="login-form-label" />
-                    <h:inputSecret id="password" value="#{loginBean.password}" styleClass="login-form-control" />
+                    <h:inputSecret id="password" value="#{loginBean.password}" styleClass="login-form-control">
+                        <f:validateRequired />
+                    </h:inputSecret>
                 </div>
                 <h:commandButton styleClass="login-form-submit" value="Login" action="#{loginBean.login()}" />
                 <div class="d-flex justify-content-around">

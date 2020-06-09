@@ -8,17 +8,17 @@ import javax.faces.validator.FacesValidator;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
-@FacesValidator("cpf")
-public class CpfValidator implements Validator {
+@FacesValidator("cep")
+public class CepVlaidator implements Validator {
 
-    public final static String INVALID_MESSAGE = "CPF inválido.";
+    public final static String INVALID_MESSAGE = "CEP inválido.";
 
     @Override
     public void validate(FacesContext context, UIComponent ui, Object value) throws ValidatorException {
 
-        String cpf = Converter.removeNonDigits((String) value);
+        String cep = Converter.removeNonDigits((String) value);
 
-        if (cpf != null && !com.lacussoft.utils.Validator.isCpf(cpf)) {
+        if (cep != null && !com.lacussoft.utils.Validator.isCep(cep)) {
             FacesMessage msg = new FacesMessage(null, INVALID_MESSAGE);
             throw new ValidatorException(msg);
         }

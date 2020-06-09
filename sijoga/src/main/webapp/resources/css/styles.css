@@ -34,6 +34,10 @@ body {
     padding-left: 15px;
 }
 
+main.main {
+    margin-top: 76px;
+}
+
 .div-itens {
     width: 800px;
     margin: 0px auto;
@@ -44,7 +48,6 @@ body {
     left: 0px;
     top: 0px;
     padding: 0px 25px 25px 25px;
-    margin-top: 76px;
 }
 
 .item {

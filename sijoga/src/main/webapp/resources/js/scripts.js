@@ -1,6 +1,13 @@
 $(function() {
     
-    $('.mask-cpf').mask('000.000.000-00', {reverse: true});
+    $('.mask-cpf').mask('000.000.000-00', { reverse: true });
+    $('.mask-cep').mask('00000-000');
+    $('.mask-cep').mask('99/99/9999');
+
+    $('.datepicker').datepicker({
+        format: 'dd/mm/yyyy',
+        endDate: '-18y'
+    });
     
     var publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSIMqKwalYJtmvTwYi8ximHRZdOl2QBBlB5MIaWxwhXVBR5E_iiipj_z1xNVhiqjsljyK8XqL3Zj3ri/pub?gid=0&single=true&output=csv';
     var tipo = 'Advogado';

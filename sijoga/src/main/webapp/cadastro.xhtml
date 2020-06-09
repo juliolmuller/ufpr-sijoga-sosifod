@@ -9,25 +9,105 @@
         xmlns:p="http://primefaces.org/ui">
 
     <ui:define name="content">
-        <h:panelGroup rendered="#{param['error']}">
-            <script defer="true" type="text/javascript">
-                $(function() {
-                    toastr.error('Credenciais inválidas');
-                });
-            </script>
-        </h:panelGroup>
+        <div class="container">
+            <ui:repeat var="msg" value="#{facesContext.messageList}">
+                <script defer="true" type="text/javascript">
+                    $(function() {
+                        toastr.error('#{msg.detail}');
+                    });
+                </script>
+            </ui:repeat>
 
-        <div class="login-container">
-            <h:form id="login-form" prependId="false">
-                <div class="mt-3">
-                    <h:outputLabel for="cpf" value="CPF:" styleClass="login-form-label" />
-                    <h:inputText id="cpf" value="#{loginBean.cpf}" styleClass="login-form-control mask-cpf" pt:autofocus="true" />
+            <h:form id="signup-form" prependId="false" styleClass="row">
+                <div class="mb-3 p-1">
+                    <h:outputLabel for="role" value="Perfil:" /><br/>
+                    <h:selectOneRadio id="role" label="PERFIL" value="#{userForm.role}" immediate="true">
+                        <f:selectItem itemLabel="Advogado" itemValue="ADVOGADO" />
+                        <f:selectItem itemLabel="Juiz" itemValue="JUIZ" />
+                        <f:validateRequired />
+                    </h:selectOneRadio>
                 </div>
-                <div class="mt-3">
-                    <h:outputLabel for="password" value="Senha:" styleClass="login-form-label" />
-                    <h:inputSecret id="password" value="#{loginBean.password}" styleClass="login-form-control" />
+                <div class="mb-3 p-1">
+                    <h:outputLabel for="cpf" value="CPF:" /><br/>
+                    <h:inputText id="cpf" label="CPF" value="#{userForm.cpf}" styleClass="mask-cpf"></h:inputText>
                 </div>
-                <h:commandButton styleClass="login-form-submit" value="Login" action="#{loginBean.login()}" />
+                <div class="mb-3 p-1">
+                    <h:outputLabel for="name" value="Nome completo:" /><br/>
+                    <h:inputText id="name" label="NOME" value="#{userForm.name}"></h:inputText>
+                </div>
+                <div class="mb-3 p-1">
+                    <h:outputLabel for="dateOfBirth" value="Data de nascimento:" /><br/>
+                    <h:inputText id="dateOfBirth" label="DATA DE NASCIMENTO" value="#{userForm.dateOfBirth}" styleClass="datepicker">
+                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                    </h:inputText>
+                </div>
+                <div class="mb-3 p-1">
+                    <h:outputLabel for="email" value="Email:" /><br/>
+                    <h:inputText id="email" label="EMAIL" value="#{userForm.email}"></h:inputText>
+                </div>
+                <div class="mb-3 p-1">
+                    <h:outputLabel for="zipCode" value="CEP:" /><br/>
+                    <h:inputText id="zipCode" label="CEP" value="#{userForm.address.zipCode}" styleClass="mask-cep"></h:inputText>
+                </div>
+                <div class="mb-3 p-1">
+                    <h:outputLabel for="street" value="Endereço:" /><br/>
+                    <h:inputText id="street" label="ENDEREÇO" value="#{userForm.address.street}"></h:inputText>
+                </div>
+                <div class="mb-3 p-1">
+                    <h:outputLabel for="number" value="Logradouro:" /><br/>
+                    <h:inputText id="number" label="NÚMERO" value="#{userForm.address.number}" styleClass="mask-integer"></h:inputText>
+                </div>
+                <div class="mb-3 p-1">
+                    <h:outputLabel for="complement" value="Complemento:" /><br/>
+                    <h:inputText id="complement" label="COMPLEMENTO" value="#{userForm.address.complement}"></h:inputText>
+                </div>
+                <div class="mb-3 p-1">
+                    <h:outputLabel for="state" value="Estado:" /><br/>
+                    <h:selectOneMenu id="state" label="ESTADO" value="#{userForm.address.state}">
+                        <f:selectItem itemValue="" itemLabel="" noSelectionOption="true" />
+                        <f:selectItem itemValue="AC" itemLabel="Acre" />
+                        <f:selectItem itemValue="AL" itemLabel="Alagoas" />
+                        <f:selectItem itemValue="AP" itemLabel="Amapá" />
+                        <f:selectItem itemValue="AM" itemLabel="Amazonas" />
+                        <f:selectItem itemValue="BA" itemLabel="Bahia" />
+                        <f:selectItem itemValue="CE" itemLabel="Ceará" />
+                        <f:selectItem itemValue="DF" itemLabel="Distrito Federal" />
+                        <f:selectItem itemValue="ES" itemLabel="Espírito Santo" />
+                        <f:selectItem itemValue="GO" itemLabel="Goiás" />
+                        <f:selectItem itemValue="MA" itemLabel="Maranhão" />
+                        <f:selectItem itemValue="MT" itemLabel="Mato Grosso" />
+                        <f:selectItem itemValue="MS" itemLabel="Mato Grosso do Sul" />
+                        <f:selectItem itemValue="MG" itemLabel="Minas Gerais" />
+                        <f:selectItem itemValue="PA" itemLabel="Pará" />
+                        <f:selectItem itemValue="PB" itemLabel="Paraíba" />
+                        <f:selectItem itemValue="PR" itemLabel="Paraná" />
+                        <f:selectItem itemValue="PE" itemLabel="Pernambuco" />
+                        <f:selectItem itemValue="PI" itemLabel="Piauí" />
+                        <f:selectItem itemValue="RJ" itemLabel="Rio de Janeiro" />
+                        <f:selectItem itemValue="RN" itemLabel="Rio Grande do Norte" />
+                        <f:selectItem itemValue="RS" itemLabel="Rio Grande do Sul" />
+                        <f:selectItem itemValue="RO" itemLabel="Rondônia" />
+                        <f:selectItem itemValue="RR" itemLabel="Roraima" />
+                        <f:selectItem itemValue="SC" itemLabel="Santa Catarina" />
+                        <f:selectItem itemValue="SP" itemLabel="São Paulo" />
+                        <f:selectItem itemValue="SE" itemLabel="Sergipe" />
+                        <f:selectItem itemValue="TO" itemLabel="Tocantins" />
+                    </h:selectOneMenu>
+                </div>
+                <div class="mb-3 p-1">
+                    <h:outputLabel for="city" value="Cidade:" /><br/>
+                    <h:inputText id="city" label="CIDADE" value="#{userForm.address.city}"></h:inputText>
+                </div>
+                <div class="mb-3 p-1">
+                    <h:outputLabel for="password1" value="Senha:" /><br/>
+                    <h:inputSecret id="password1" label="SENHA" value="#{userForm.password1}" />
+                </div>
+                <div class="mb-3 p-1">
+                    <h:outputLabel for="password2" value="Confirmar senha:" /><br/>
+                    <h:inputSecret id="password2" label="CONFIRMAÇÃO DE SENHA" value="#{userForm.password2}" />
+                </div>
+                <h:commandButton value="Cadastrar" action="#{userForm.submit()}" />
+                <h:messages showDetail="true" />
             </h:form>
         </div>
     </ui:define>

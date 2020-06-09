@@ -41,7 +41,7 @@ public abstract class User implements Serializable {
     private Date dateOfBirth;
 
     @Embedded
-    private Address address;
+    private Address address = new Address();
 
     public static User create(AccessRole role) {
         try {

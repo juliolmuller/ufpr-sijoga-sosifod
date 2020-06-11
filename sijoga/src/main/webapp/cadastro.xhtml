@@ -13,100 +13,148 @@
             <ui:repeat var="msg" value="#{facesContext.messageList}">
                 <script defer="true" type="text/javascript">
                     $(function() {
-                        toastr.error('#{msg.detail}');
+                        toastr.error('#{msg.severity}: #{msg.detail}');
                     });
                 </script>
             </ui:repeat>
 
-            <h:form id="signup-form" prependId="false" styleClass="row">
-                <div class="mb-3 p-1">
-                    <h:outputLabel for="role" value="Perfil:" /><br/>
-                    <h:selectOneRadio id="role" label="PERFIL" value="#{userForm.role}" immediate="true">
-                        <f:selectItem itemLabel="Advogado" itemValue="ADVOGADO" />
-                        <f:selectItem itemLabel="Juiz" itemValue="JUIZ" />
-                        <f:validateRequired />
-                    </h:selectOneRadio>
+            <h:form id="signup-form" prependId="false">
+                <div class="row">
+                    <div class="mb-3 p-1">
+                        <h:outputLabel for="role" value="Perfil:" /><br/>
+                        <h:selectOneRadio id="role" label="PERFIL" value="#{userForm.role}">
+                            <f:validateRequired />
+                            <f:selectItem itemLabel="Advogado" itemValue="ADVOGADO" />
+                            <f:selectItem itemLabel="Juiz" itemValue="JUIZ" />
+                        </h:selectOneRadio>
+                    </div>
+                    <div class="mb-3 p-1" style="display: none;">
+                        <h:outputLabel for="oab" value="Número da OAB:" /><br/>
+                        <h:inputText id="oab" label="OAB" value="#{userForm.oab}" styleClass="mask-int">
+                            <f:validateRequired />
+                            <f:converter converterId="numbersOnly" />
+                        </h:inputText>
+                    </div>
                 </div>
-                <div class="mb-3 p-1">
-                    <h:outputLabel for="cpf" value="CPF:" /><br/>
-                    <h:inputText id="cpf" label="CPF" value="#{userForm.cpf}" styleClass="mask-cpf"></h:inputText>
+                <div class="row">
+                    <div class="mb-3 p-1">
+                        <h:outputLabel for="cpf" value="CPF:" /><br/>
+                        <h:inputText id="cpf" label="CPF" value="#{userForm.cpf}" styleClass="mask-cpf">
+                            <f:validateRequired />
+                            <f:converter converterId="numbersOnly" />
+                            <f:validator validatorId="cpf" />
+                        </h:inputText>
+                    </div>
+                    <div class="mb-3 p-1">
+                        <h:outputLabel for="name" value="Nome completo:" /><br/>
+                        <h:inputText id="name" label="NOME" value="#{userForm.name}">
+                            <f:validateRequired />
+                            <f:validateLength maximum="120" />
+                        </h:inputText>
+                    </div>
+                    <div class="mb-3 p-1">
+                        <h:outputLabel for="dateOfBirth" value="Data de nascimento:" /><br/>
+                        <h:inputText id="dateOfBirth" label="DATA DE NASCIMENTO" value="#{userForm.dateOfBirth}" styleClass="mask-date datepicker">
+                            <f:validateRequired />
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                            <f:validator validatorId="majority" />
+                        </h:inputText>
+                    </div>
+                    <div class="mb-3 p-1">
+                        <h:outputLabel for="email" value="Email:" /><br/>
+                        <h:inputText id="email" label="EMAIL" value="#{userForm.email}">
+                            <f:validateRequired />
+                            <f:validateLength maximum="200" />
+                            <f:validator validatorId="email" />
+                        </h:inputText>
+                    </div>
+                    <div class="mb-3 p-1">
+                        <h:outputLabel for="zipCode" value="CEP:" /><br/>
+                        <h:inputText id="zipCode" label="CEP" value="#{userForm.address.zipCode}" styleClass="mask-cep">
+                            <f:validateRequired />
+                            <f:converter converterId="numbersOnly" />
+                            <f:validator validatorId="cep" />
+                        </h:inputText>
+                    </div>
+                    <div class="mb-3 p-1">
+                        <h:outputLabel for="street" value="Endereço:" /><br/>
+                        <h:inputText id="street" label="ENDEREÇO" value="#{userForm.address.street}">
+                            <f:validateRequired />
+                            <f:validateLength maximum="100" />
+                        </h:inputText>
+                    </div>
+                    <div class="mb-3 p-1">
+                        <h:outputLabel for="number" value="Logradouro:" /><br/>
+                        <h:inputText id="number" label="NÚMERO" value="#{userForm.address.number}" styleClass="mask-int">
+                            <f:validateRequired />
+                            <f:converter converterId="numbersOnly" />
+                            <f:validateLongRange minimum="0" maximum="999999" />
+                        </h:inputText>
+                    </div>
+                    <div class="mb-3 p-1">
+                        <h:outputLabel for="complement" value="Complemento:" /><br/>
+                        <h:inputText id="complement" label="COMPLEMENTO" value="#{userForm.address.complement}">
+                            <f:validateLength maximum="30" />
+                        </h:inputText>
+                    </div>
+                    <div class="mb-3 p-1">
+                        <h:outputLabel for="state" value="Estado:" /><br/>
+                        <h:selectOneMenu id="state" label="ESTADO" value="#{userForm.address.state}">
+                            <f:validateRequired />
+                            <f:selectItem itemValue="" itemLabel="" noSelectionOption="true" />
+                            <f:selectItem itemValue="AC" itemLabel="Acre" />
+                            <f:selectItem itemValue="AL" itemLabel="Alagoas" />
+                            <f:selectItem itemValue="AP" itemLabel="Amapá" />
+                            <f:selectItem itemValue="AM" itemLabel="Amazonas" />
+                            <f:selectItem itemValue="BA" itemLabel="Bahia" />
+                            <f:selectItem itemValue="CE" itemLabel="Ceará" />
+                            <f:selectItem itemValue="DF" itemLabel="Distrito Federal" />
+                            <f:selectItem itemValue="ES" itemLabel="Espírito Santo" />
+                            <f:selectItem itemValue="GO" itemLabel="Goiás" />
+                            <f:selectItem itemValue="MA" itemLabel="Maranhão" />
+                            <f:selectItem itemValue="MT" itemLabel="Mato Grosso" />
+                            <f:selectItem itemValue="MS" itemLabel="Mato Grosso do Sul" />
+                            <f:selectItem itemValue="MG" itemLabel="Minas Gerais" />
+                            <f:selectItem itemValue="PA" itemLabel="Pará" />
+                            <f:selectItem itemValue="PB" itemLabel="Paraíba" />
+                            <f:selectItem itemValue="PR" itemLabel="Paraná" />
+                            <f:selectItem itemValue="PE" itemLabel="Pernambuco" />
+                            <f:selectItem itemValue="PI" itemLabel="Piauí" />
+                            <f:selectItem itemValue="RJ" itemLabel="Rio de Janeiro" />
+                            <f:selectItem itemValue="RN" itemLabel="Rio Grande do Norte" />
+                            <f:selectItem itemValue="RS" itemLabel="Rio Grande do Sul" />
+                            <f:selectItem itemValue="RO" itemLabel="Rondônia" />
+                            <f:selectItem itemValue="RR" itemLabel="Roraima" />
+                            <f:selectItem itemValue="SC" itemLabel="Santa Catarina" />
+                            <f:selectItem itemValue="SP" itemLabel="São Paulo" />
+                            <f:selectItem itemValue="SE" itemLabel="Sergipe" />
+                            <f:selectItem itemValue="TO" itemLabel="Tocantins" />
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="mb-3 p-1">
+                        <h:outputLabel for="city" value="Cidade:" /><br/>
+                        <h:inputText id="city" label="CIDADE" value="#{userForm.address.city}">
+                            <f:validateRequired />
+                            <f:validateLength maximum="60" />
+                        </h:inputText>
+                    </div>
+                    <div class="mb-3 p-1">
+                        <h:outputLabel for="password1" value="Senha:" /><br/>
+                        <h:inputSecret id="password1" label="SENHA" value="#{userForm.password1}">
+                            <f:validateRequired />
+                            <f:validateLength minimum="8" maximum="100" />
+                        </h:inputSecret>
+                    </div>
+                    <div class="mb-3 p-1">
+                        <h:outputLabel for="password2" value="Confirmar senha:" /><br/>
+                        <h:inputSecret id="password2" label="CONFIRMAÇÃO DE SENHA" value="#{userForm.password2}">
+                            <f:validateRequired />
+                            <f:validator validatorId="repeatPassword" />
+                            <f:attribute name="target" value="password1" />
+                        </h:inputSecret>
+                    </div>
                 </div>
-                <div class="mb-3 p-1">
-                    <h:outputLabel for="name" value="Nome completo:" /><br/>
-                    <h:inputText id="name" label="NOME" value="#{userForm.name}"></h:inputText>
-                </div>
-                <div class="mb-3 p-1">
-                    <h:outputLabel for="dateOfBirth" value="Data de nascimento:" /><br/>
-                    <h:inputText id="dateOfBirth" label="DATA DE NASCIMENTO" value="#{userForm.dateOfBirth}" styleClass="datepicker">
-                        <f:convertDateTime pattern="dd/MM/yyyy" />
-                    </h:inputText>
-                </div>
-                <div class="mb-3 p-1">
-                    <h:outputLabel for="email" value="Email:" /><br/>
-                    <h:inputText id="email" label="EMAIL" value="#{userForm.email}"></h:inputText>
-                </div>
-                <div class="mb-3 p-1">
-                    <h:outputLabel for="zipCode" value="CEP:" /><br/>
-                    <h:inputText id="zipCode" label="CEP" value="#{userForm.address.zipCode}" styleClass="mask-cep"></h:inputText>
-                </div>
-                <div class="mb-3 p-1">
-                    <h:outputLabel for="street" value="Endereço:" /><br/>
-                    <h:inputText id="street" label="ENDEREÇO" value="#{userForm.address.street}"></h:inputText>
-                </div>
-                <div class="mb-3 p-1">
-                    <h:outputLabel for="number" value="Logradouro:" /><br/>
-                    <h:inputText id="number" label="NÚMERO" value="#{userForm.address.number}" styleClass="mask-integer"></h:inputText>
-                </div>
-                <div class="mb-3 p-1">
-                    <h:outputLabel for="complement" value="Complemento:" /><br/>
-                    <h:inputText id="complement" label="COMPLEMENTO" value="#{userForm.address.complement}"></h:inputText>
-                </div>
-                <div class="mb-3 p-1">
-                    <h:outputLabel for="state" value="Estado:" /><br/>
-                    <h:selectOneMenu id="state" label="ESTADO" value="#{userForm.address.state}">
-                        <f:selectItem itemValue="" itemLabel="" noSelectionOption="true" />
-                        <f:selectItem itemValue="AC" itemLabel="Acre" />
-                        <f:selectItem itemValue="AL" itemLabel="Alagoas" />
-                        <f:selectItem itemValue="AP" itemLabel="Amapá" />
-                        <f:selectItem itemValue="AM" itemLabel="Amazonas" />
-                        <f:selectItem itemValue="BA" itemLabel="Bahia" />
-                        <f:selectItem itemValue="CE" itemLabel="Ceará" />
-                        <f:selectItem itemValue="DF" itemLabel="Distrito Federal" />
-                        <f:selectItem itemValue="ES" itemLabel="Espírito Santo" />
-                        <f:selectItem itemValue="GO" itemLabel="Goiás" />
-                        <f:selectItem itemValue="MA" itemLabel="Maranhão" />
-                        <f:selectItem itemValue="MT" itemLabel="Mato Grosso" />
-                        <f:selectItem itemValue="MS" itemLabel="Mato Grosso do Sul" />
-                        <f:selectItem itemValue="MG" itemLabel="Minas Gerais" />
-                        <f:selectItem itemValue="PA" itemLabel="Pará" />
-                        <f:selectItem itemValue="PB" itemLabel="Paraíba" />
-                        <f:selectItem itemValue="PR" itemLabel="Paraná" />
-                        <f:selectItem itemValue="PE" itemLabel="Pernambuco" />
-                        <f:selectItem itemValue="PI" itemLabel="Piauí" />
-                        <f:selectItem itemValue="RJ" itemLabel="Rio de Janeiro" />
-                        <f:selectItem itemValue="RN" itemLabel="Rio Grande do Norte" />
-                        <f:selectItem itemValue="RS" itemLabel="Rio Grande do Sul" />
-                        <f:selectItem itemValue="RO" itemLabel="Rondônia" />
-                        <f:selectItem itemValue="RR" itemLabel="Roraima" />
-                        <f:selectItem itemValue="SC" itemLabel="Santa Catarina" />
-                        <f:selectItem itemValue="SP" itemLabel="São Paulo" />
-                        <f:selectItem itemValue="SE" itemLabel="Sergipe" />
-                        <f:selectItem itemValue="TO" itemLabel="Tocantins" />
-                    </h:selectOneMenu>
-                </div>
-                <div class="mb-3 p-1">
-                    <h:outputLabel for="city" value="Cidade:" /><br/>
-                    <h:inputText id="city" label="CIDADE" value="#{userForm.address.city}"></h:inputText>
-                </div>
-                <div class="mb-3 p-1">
-                    <h:outputLabel for="password1" value="Senha:" /><br/>
-                    <h:inputSecret id="password1" label="SENHA" value="#{userForm.password1}" />
-                </div>
-                <div class="mb-3 p-1">
-                    <h:outputLabel for="password2" value="Confirmar senha:" /><br/>
-                    <h:inputSecret id="password2" label="CONFIRMAÇÃO DE SENHA" value="#{userForm.password2}" />
-                </div>
-                <h:commandButton value="Cadastrar" action="#{userForm.submit()}" />
+                <h:commandButton value="Cadastrar" action="#{userForm.create()}" />
                 <h:messages showDetail="true" />
             </h:form>
         </div>

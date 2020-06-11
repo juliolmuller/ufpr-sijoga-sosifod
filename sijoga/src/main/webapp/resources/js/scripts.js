@@ -1,14 +1,27 @@
 $(function() {
-    
+
     $('.mask-cpf').mask('000.000.000-00', { reverse: true });
+    $('.mask-date').mask('00/00/0000');
     $('.mask-cep').mask('00000-000');
-    $('.mask-cep').mask('99/99/9999');
+    $('.mask-int').mask('000.000');
 
     $('.datepicker').datepicker({
         format: 'dd/mm/yyyy',
         endDate: '-18y'
     });
-    
+
+    // Função para exibir/esconder campo para 'Inscrição OAB'
+    $('input[name="role"]').on('change', function () {
+        var oabField = $('#oab').parent();
+        var role = $(this).val();
+
+        if (role === 'ADVOGADO') {
+            oabField.show();
+        } else {
+            oabField.hide();
+        }
+    });
+
     var publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSIMqKwalYJtmvTwYi8ximHRZdOl2QBBlB5MIaWxwhXVBR5E_iiipj_z1xNVhiqjsljyK8XqL3Zj3ri/pub?gid=0&single=true&output=csv';
     var tipo = 'Advogado';
     var usuario = 'Josnei';

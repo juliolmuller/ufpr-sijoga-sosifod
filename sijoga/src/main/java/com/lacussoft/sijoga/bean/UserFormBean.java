@@ -24,7 +24,7 @@ public class UserFormBean implements Serializable {
     private String password1;
     private String password2;
 
-    public String submit() {
+    public String create() {
         User user = User.create(role);
         user.setCpf(cpf);
         user.setName(name);

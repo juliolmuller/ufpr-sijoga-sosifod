@@ -12,6 +12,8 @@ import javax.faces.validator.ValidatorException;
 @FacesValidator("repeatPassword")
 public class RepeatPasswordValidator implements Validator {
 
+    public final static String INVALID_MESSAGE = "As senhas não conferem.";
+
     @Override
     public void validate(FacesContext context, UIComponent ui, Object value) throws ValidatorException {
 
@@ -19,15 +21,15 @@ public class RepeatPasswordValidator implements Validator {
         UIInput textInput = (UIInput) ui.getParent().findComponent(fieldId);
 
         if (textInput == null) {
-            FacesMessage msg = new FacesMessage(null, "Nenhum campo com ID \"" + fieldId + "\" encontrado.");
-            throw new ValidatorException(msg);
+            String msg = "Nenhum campo com ID \"" + fieldId + "\" encontrado.";
+            throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_WARN, msg, msg));
         }
 
         String originalValue = Converter.nullable((String) textInput.getValue());
         String repeatedValue = Converter.nullable((String) value);
 
         if (originalValue != null && repeatedValue != null && !originalValue.equals(repeatedValue)) {
-            FacesMessage msg = new FacesMessage(null, "As senhas não conferem.");
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, INVALID_MESSAGE, INVALID_MESSAGE);
             throw new ValidatorException(msg);
         }
     }

@@ -28,7 +28,8 @@ public class MajorityValidator implements Validator {
             long age = ChronoUnit.YEARS.between(birth, now);
 
             if (age < MAJORITY_AGE) {
-                throw new ValidatorException(new FacesMessage(null, INVALID_MESSAGE));
+                FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, INVALID_MESSAGE, INVALID_MESSAGE);
+                throw new ValidatorException(msg);
             }
         }
     }

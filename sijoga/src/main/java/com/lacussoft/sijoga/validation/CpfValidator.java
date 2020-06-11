@@ -19,7 +19,7 @@ public class CpfValidator implements Validator {
         String cpf = Converter.removeNonDigits((String) value);
 
         if (cpf != null && !com.lacussoft.utils.Validator.isCpf(cpf)) {
-            FacesMessage msg = new FacesMessage(null, INVALID_MESSAGE);
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, INVALID_MESSAGE, INVALID_MESSAGE);
             throw new ValidatorException(msg);
         }
     }

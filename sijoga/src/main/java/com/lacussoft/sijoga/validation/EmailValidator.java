@@ -19,7 +19,7 @@ public class EmailValidator implements Validator {
         String email = Converter.nullable((String) value);
 
         if (email != null && !com.lacussoft.utils.Validator.isEmail(email)) {
-            FacesMessage msg = new FacesMessage(null, INVALID_MESSAGE);
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, INVALID_MESSAGE, INVALID_MESSAGE);
             throw new ValidatorException(msg);
         }
     }

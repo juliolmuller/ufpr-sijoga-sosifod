@@ -19,7 +19,7 @@ public class CepVlaidator implements Validator {
         String cep = Converter.removeNonDigits((String) value);
 
         if (cep != null && !com.lacussoft.utils.Validator.isCep(cep)) {
-            FacesMessage msg = new FacesMessage(null, INVALID_MESSAGE);
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, INVALID_MESSAGE, INVALID_MESSAGE);
             throw new ValidatorException(msg);
         }
     }

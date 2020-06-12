@@ -24,17 +24,15 @@
                 <div class="row">
                     <div class="mb-3 p-1">
                         <h:outputLabel for="role" value="Perfil:" /><br/>
-                        <h:selectOneRadio id="role" label="PERFIL" value="#{userForm.role}">
+                        <h:selectOneRadio id="role" label="PERFIL" value="#{userForm.role}" binding="#{role}">
                             <f:validateRequired />
                             <f:selectItem itemLabel="Advogado" itemValue="ADVOGADO" />
                             <f:selectItem itemLabel="Juiz" itemValue="JUIZ" />
-                            <f:ajax event="change" render="oabField" />
                         </h:selectOneRadio>
                     </div>
-                    <h:panelGroup id="oabField" layout="block" styleClass="mb-3 p-1">
-                        <h:outputLabel for="oab" value="Número da OAB:" rendered="#{userForm.role == 'ADVOGADO'}" /><br/>
-                        <h:inputText id="oab" label="OAB" value="#{userForm.oab}" rendered="#{userForm.role == 'ADVOGADO'}">
-                            <f:validateRequired />
+                    <h:panelGroup id="oabField" layout="block" styleClass="mb-3 p-1" style="display: #{role.value == 'ADVOGADO' ? 'block' : 'none'};">
+                        <h:outputLabel for="oab" value="Número da OAB:" /><br/>
+                        <h:inputText id="oab" label="OAB" value="#{userForm.oab}" styleClass="mask-int" required="#{role.value == 'ADVOGADO'}">
                             <f:converter converterId="numbersOnly" />
                         </h:inputText>
                     </h:panelGroup>

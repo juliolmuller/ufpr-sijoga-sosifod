@@ -10,13 +10,15 @@
 
     <ui:define name="content">
         <div class="container">
-            <ui:repeat var="msg" value="#{facesContext.messageList}">
-                <script defer="true" type="text/javascript">
-                    $(function() {
-                        toastr.error('#{msg.severity}: #{msg.detail}');
-                    });
-                </script>
-            </ui:repeat>
+            <h:panelGroup id="alerts" layout="block">
+                <ui:repeat var="msg" value="#{facesContext.messageList}">
+                    <script defer="true" type="text/javascript">
+                        $(function() {
+                            toastr.error('#{msg.severity}: #{msg.detail}');
+                        });
+                    </script>
+                </ui:repeat>
+            </h:panelGroup>
 
             <h:form id="signup-form" prependId="false">
                 <div class="row">
@@ -31,7 +33,7 @@
                     </div>
                     <h:panelGroup id="oabField" layout="block" styleClass="mb-3 p-1">
                         <h:outputLabel for="oab" value="Número da OAB:" rendered="#{userForm.role == 'ADVOGADO'}" /><br/>
-                        <h:inputText id="oab" label="OAB" value="#{userForm.oab}" styleClass="mask-int" rendered="#{userForm.role == 'ADVOGADO'}">
+                        <h:inputText id="oab" label="OAB" value="#{userForm.oab}" rendered="#{userForm.role == 'ADVOGADO'}">
                             <f:validateRequired />
                             <f:converter converterId="numbersOnly" />
                         </h:inputText>
@@ -78,15 +80,15 @@
                         </h:inputText>
                     </div>
                     <div class="mb-3 p-1">
-                        <h:outputLabel for="street" value="Endereço:" /><br/>
-                        <h:inputText id="street" label="ENDEREÇO" value="#{userForm.address.street}">
+                        <h:outputLabel for="street" value="Logradouro:" /><br/>
+                        <h:inputText id="street" label="LOGRADOURO" value="#{userForm.address.street}" styleClass="zip-code-street">
                             <f:validateRequired />
                             <f:validateLength maximum="100" />
                         </h:inputText>
                     </div>
                     <div class="mb-3 p-1">
-                        <h:outputLabel for="number" value="Logradouro:" /><br/>
-                        <h:inputText id="number" label="NÚMERO" value="#{userForm.address.number}" styleClass="mask-int">
+                        <h:outputLabel for="number" value="Número:" /><br/>
+                        <h:inputText id="number" label="NÚMERO" value="#{userForm.address.number}" styleClass="mask-int zip-code-number">
                             <f:validateRequired />
                             <f:converter converterId="numbersOnly" />
                             <f:validateLongRange minimum="0" maximum="999999" />
@@ -94,13 +96,13 @@
                     </div>
                     <div class="mb-3 p-1">
                         <h:outputLabel for="complement" value="Complemento:" /><br/>
-                        <h:inputText id="complement" label="COMPLEMENTO" value="#{userForm.address.complement}">
+                        <h:inputText id="complement" label="COMPLEMENTO" value="#{userForm.address.complement}" styleClass="zip-code-complement">
                             <f:validateLength maximum="30" />
                         </h:inputText>
                     </div>
                     <div class="mb-3 p-1">
                         <h:outputLabel for="state" value="Estado:" /><br/>
-                        <h:selectOneMenu id="state" label="ESTADO" value="#{userForm.address.state}">
+                        <h:selectOneMenu id="state" label="ESTADO" value="#{userForm.address.state}" styleClass="zip-code-state">
                             <f:validateRequired />
                             <f:selectItem itemValue="" itemLabel="" noSelectionOption="true" />
                             <f:selectItem itemValue="AC" itemLabel="Acre" />
@@ -134,7 +136,7 @@
                     </div>
                     <div class="mb-3 p-1">
                         <h:outputLabel for="city" value="Cidade:" /><br/>
-                        <h:inputText id="city" label="CIDADE" value="#{userForm.address.city}">
+                        <h:inputText id="city" label="CIDADE" value="#{userForm.address.city}" styleClass="zip-code-city">
                             <f:validateRequired />
                             <f:validateLength maximum="60" />
                         </h:inputText>

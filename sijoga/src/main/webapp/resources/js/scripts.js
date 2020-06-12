@@ -1,8 +1,27 @@
-$(function() {
+$(function () {
 
-    $('.mask-cpf').mask('000.000.000-00', { reverse: true });
+    function onCepComplete(cep) {
+        cep = cep.replace(/\D/g, '');
+        var fields = $('[class^="zip-code-"]');
+        $(fields).prop('disabled', true).val('');
+        $.ajax({
+            method: 'GET',
+            url: `https://viacep.com.br/ws/${cep}/json`,
+            success(response) {
+                $('.zip-code-street').val(response.logradouro);
+                $('.zip-code-state').val(response.uf);
+                $('.zip-code-city').val(response.localidade);
+                $('.zip-code-number').focus();
+            },
+            complete() {
+              $(fields).prop('disabled', false)
+            }
+        });
+    }
+
+    $('.mask-cpf').mask('000.000.000-00', {reverse: true});
     $('.mask-date').mask('00/00/0000');
-    $('.mask-cep').mask('00000-000');
+    $('.mask-cep').mask('00000-000', { onComplete: onCepComplete });
     $('.mask-int').mask('000.000');
 
     $('.datepicker').datepicker({
@@ -51,13 +70,13 @@ $(function() {
                         parsed += '<span class="fase">' + item.fase + '</span>';
                     }
                     parsed += '<span class="juiz"><b>Juiz:</b> ' + item.juiz + '</span></div>' +
-                        '<div class="partes">' +
-                        '<span class=!promovido!><b>Promovido:</b> ' + item.promovido + '<span style="margin-left: 25px;">' +
-                        '<b>Advogado:</b> ' + item.advpromovido + '</span></div>' +
-                        '<div class="partes">' +
-                        '<span class="promovente"><b>Promovente:</b> ' + item.promovente + '<span style="margin-left: 25px;">' +
-                        '<b>Advogado:</b> ' + item.advpromovente + '</span></div>' +
-                        '<div class="descricao">' + item.descricao + '</div></div>';
+                            '<div class="partes">' +
+                            '<span class=!promovido!><b>Promovido:</b> ' + item.promovido + '<span style="margin-left: 25px;">' +
+                            '<b>Advogado:</b> ' + item.advpromovido + '</span></div>' +
+                            '<div class="partes">' +
+                            '<span class="promovente"><b>Promovente:</b> ' + item.promovente + '<span style="margin-left: 25px;">' +
+                            '<b>Advogado:</b> ' + item.advpromovente + '</span></div>' +
+                            '<div class="descricao">' + item.descricao + '</div></div>';
                 }
             }
         });

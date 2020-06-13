@@ -2,11 +2,12 @@
 
 <ui:composition template="WEB-INF/templates/layout.xhtml"
         xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:f="http://xmlns.jcp.org/jsf/core"
-    	xmlns:h="http://xmlns.jcp.org/jsf/html"
-    	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-    	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-        xmlns:p="http://primefaces.org/ui">
+	      xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:my="http://lacussoft.com/sijoga/tags">
 
     <ui:define name="header">
         <div class="d-flex justify-content-between">
@@ -33,9 +34,9 @@
                     <option>Promovido</option>
                     <option>Promovente</option>
                 </select>
-            </div> 
+            </div>
             <div id="div-filtro-conclusao" style="display: inline-block;">
-                Conslusão: 
+                Conslusão:
                 <select class="filtro" id="filtro-conclusao">
                     <option>Todos</option>
                     <option>Ganhou</option>
@@ -44,10 +45,13 @@
             </div>
         </div>
     </ui:define>
-    
+
     <ui:define name="content">
+        <h:panelGroup id="alerts" layout="block">
+            <my:toasts messages="#{facesContext.messageList}" />
+        </h:panelGroup>
         <div class="div-itens">
-            <ul id="lista"></ul>     
+            <ul id="lista"></ul>
         </div>
         <h:button id="novo-processo" value="+ Novo Processo" outcome="processo" />
     </ui:define>

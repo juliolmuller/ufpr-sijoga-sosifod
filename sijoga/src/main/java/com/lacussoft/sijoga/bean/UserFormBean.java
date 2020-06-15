@@ -4,10 +4,16 @@ import com.lacussoft.sijoga.model.AccessRole;
 import com.lacussoft.sijoga.model.Address;
 import com.lacussoft.sijoga.model.Advogado;
 import com.lacussoft.sijoga.model.User;
+import com.lacussoft.sijoga.services.Dao;
 import com.lacussoft.utils.Converter;
 import java.io.Serializable;
 import java.util.Date;
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.faces.context.Flash;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 @Named("userForm")
@@ -24,6 +30,15 @@ public class UserFormBean implements Serializable {
     private String password1;
     private String password2;
 
+    @EJB
+    private Dao dao;
+
+    @Inject
+    private FacesContext context;
+
+    @Inject
+    private Flash flash;
+
     public String create() {
         User user = User.create(role);
         user.setCpf(cpf);
@@ -36,8 +51,13 @@ public class UserFormBean implements Serializable {
             ((Advogado) user).setOab(oab);
         }
 
-        System.out.println(user);
-        return null;
+        dao.create(user);
+
+        String successMsg = "Usuário criado com sucesso.";
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, successMsg, successMsg));
+        flash.setKeepMessages(true);
+
+        return "login?faces-redirect=true";
     }
 
     public String getCpf() {

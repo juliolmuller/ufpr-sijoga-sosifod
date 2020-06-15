@@ -1,5 +1,6 @@
 package com.lacussoft.sijoga.model;
 
+import com.lacussoft.utils.SecurityUtil;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
@@ -20,6 +21,8 @@ import javax.persistence.TemporalType;
 @DiscriminatorColumn(name = "perfil")
 public abstract class User implements Serializable {
 
+    private static final String HASH_PREFIX = "@SIJOGA::";
+
     @Id
     @GeneratedValue
     private Long id;
@@ -27,7 +30,7 @@ public abstract class User implements Serializable {
     @Column(unique = true, updatable = false, nullable = false, length = 11)
     private String cpf;
 
-    @Column(name = "senha", nullable = false, length = 32)
+    @Column(name = "senha", nullable = false, length = 41)
     private String password;
 
     @Column(name = "nome", nullable = false, length = 120)
@@ -51,6 +54,17 @@ public abstract class User implements Serializable {
         }
     }
 
+    public static String hashPassword(String plainPassword) {
+        if (!plainPassword.startsWith(HASH_PREFIX)) {
+            return HASH_PREFIX + SecurityUtil.encryptPassword(plainPassword);
+        }
+        return plainPassword;
+    }
+
+    public void hashPassword() {
+        password = hashPassword(password);
+    }
+
     public String getRole() {
         String[] clasName = getClass().getName().split("\\.");
         return clasName[clasName.length - 1];
@@ -58,10 +72,6 @@ public abstract class User implements Serializable {
 
     public Long getId() {
         return id;
-    }
-
-    private void setId(Long id) {
-        this.id = id;
     }
 
     public String getCpf() {
@@ -73,6 +83,10 @@ public abstract class User implements Serializable {
     }
 
     public String getPassword() {
+        if (!password.startsWith(HASH_PREFIX)) {
+            int hashLength = HASH_PREFIX.length();
+            return password.substring(hashLength);
+        }
         return password;
     }
 

@@ -2,7 +2,6 @@ package com.lacussoft.sijoga.security;
 
 import com.lacussoft.utils.HibernateUtil;
 import com.lacussoft.sijoga.model.User;
-import com.lacussoft.utils.SecurityUtil;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -41,8 +40,7 @@ public class AuthenticationBean implements Serializable {
     }
 
     public User createUser(User user) {
-        String hashedPassword = SecurityUtil.encryptPassword(user.getPassword());
-        user.setPassword(hashedPassword);
+        user.hashPassword();
 
         session.beginTransaction();
         session.save(user);
@@ -72,7 +70,7 @@ public class AuthenticationBean implements Serializable {
     }
 
     public User validate(String login, String password) {
-        String hashedPassword = SecurityUtil.encryptPassword(password);
+        String hashedPassword = User.hashPassword(password);
         String hql = "FROM User u WHERE u.cpf = :cpf AND u.password = :password";
 
         Query query = session.createQuery(hql);

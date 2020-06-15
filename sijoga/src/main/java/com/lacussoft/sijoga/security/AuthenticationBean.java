@@ -39,16 +39,6 @@ public class AuthenticationBean implements Serializable {
         session.close();
     }
 
-    public User createUser(User user) {
-        user.hashPassword();
-
-        session.beginTransaction();
-        session.save(user);
-        session.getTransaction().commit();
-
-        return user;
-    }
-
     public AuthenticationStatus attempt(String cpf, String password) {
         HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
         HttpServletResponse response = (HttpServletResponse) externalContext.getResponse();

@@ -4,7 +4,10 @@ import com.lacussoft.sijoga.model.Address;
 import com.lacussoft.sijoga.model.Advogado;
 import com.lacussoft.sijoga.model.Juiz;
 import com.lacussoft.sijoga.model.Parte;
+import com.lacussoft.sijoga.model.Process;
 import com.lacussoft.sijoga.services.Dao;
+import com.thedeanda.lorem.Lorem;
+import com.thedeanda.lorem.LoremIpsum;
 import java.util.Date;
 import java.util.stream.Stream;
 import javax.ejb.EJB;
@@ -17,6 +20,9 @@ public class DatabaseSeeder extends HttpServlet {
     private Juiz[] judges;
     private Advogado[] lawyers;
     private Parte[] parties;
+    private Process[] processes;
+
+    private Lorem lorem = LoremIpsum.getInstance();
 
     @EJB
     private Dao dao;
@@ -28,6 +34,7 @@ public class DatabaseSeeder extends HttpServlet {
         System.out.println("SIJOGA: seeding database...");
 
         seedUsers();
+        seedProcesses();
 
         System.out.println("SIJOGA: seeding complete.");
     }
@@ -71,5 +78,36 @@ public class DatabaseSeeder extends HttpServlet {
             new Parte("09434959209", "09434959209", "Pedro Krepsky",    new Date(), "pedro@email.com",    new Address("80610150", "Rua Morretes",            753, null,        "Porto Alegre",   "RS"), random(lawyers)),
             new Parte("88931040083", "88931040083", "Mariano Costa",    new Date(), "mariano@email.com",  new Address("13015180", "Praça Anita Garibaldi",   611, "Apto 80",   "Rio de Janeiro", "RJ"), random(lawyers))
         }).forEach(dao::create);
+    }
+
+    private void seedProcesses() {
+        System.out.println("SIJOGA:     Seeding processes...");
+
+        Stream.of(processes = new Process[] {
+            factory(), factory(), factory(), factory(), factory(), factory(), factory(), factory(),
+            factory(), factory(), factory(), factory(), factory(), factory(), factory(), factory(),
+            factory(), factory(), factory(), factory(), factory(), factory(), factory(), factory(),
+            factory(), factory(), factory(), factory(), factory(), factory(), factory(), factory(),
+            factory(), factory(), factory(), factory(), factory(), factory(), factory(), factory(),
+            factory(), factory(), factory(), factory(), factory(), factory(), factory(), factory(),
+            factory(), factory(), factory(), factory(), factory(), factory(), factory(), factory(),
+            factory(), factory(), factory(), factory(), factory(), factory(), factory(), factory()
+        }).forEach(dao::create);
+    }
+
+    private Process factory() {
+        Parte promoter, promoted;
+        do {
+            promoter = random(parties);
+            promoted = random(parties);
+        } while (promoter.getId().equals(promoted.getId()));
+        return new Process(
+            lorem.getWords(5, 30),
+            random(judges),
+            promoter,
+            promoted,
+            promoter.getLawyer(),
+            promoted.getLawyer()
+        );
     }
 }

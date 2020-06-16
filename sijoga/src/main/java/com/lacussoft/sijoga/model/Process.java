@@ -57,6 +57,17 @@ public class Process implements Serializable {
     @Column(name = "alterado_em", nullable = false)
     private Date updatedAt;
 
+    public Process() {}
+
+    public Process(String description, Juiz judge, Parte promoter, Parte promoted, User createdBy, User updatedBy) {
+        this.description = description;
+        this.createdBy = createdBy;
+        this.updatedBy = updatedBy;
+        this.promoter = promoter;
+        this.promoted = promoted;
+        this.judge = judge;
+    }
+
     public Long getId() {
         return id;
     }

@@ -25,8 +25,8 @@ public class Address implements Serializable {
     @Column(name = "uf", nullable = false, length = 2)
     private String state;
 
-    // TODO: remover construtores
     public Address() {}
+
     public Address(String zipCode, String street, Integer number, String complement, String city, String state) {
         this.zipCode = zipCode;
         this.street = street;

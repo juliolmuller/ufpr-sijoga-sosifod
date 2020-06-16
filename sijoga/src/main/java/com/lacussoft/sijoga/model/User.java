@@ -46,6 +46,17 @@ public abstract class User implements Serializable {
     @Embedded
     private Address address = new Address();
 
+    public User() {}
+
+    public User(String cpf, String password, String name, Date dateOfBirth, String email, Address address) {
+        this.dateOfBirth = dateOfBirth;
+        this.password = password;
+        this.address = address;
+        this.email = email;
+        this.name = name;
+        this.cpf = cpf;
+    }
+
     public static User create(AccessRole role) {
         try {
             return (User) role.asClass().newInstance();

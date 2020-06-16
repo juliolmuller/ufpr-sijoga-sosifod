@@ -9,21 +9,16 @@ import javax.persistence.ManyToOne;
 public class Parte extends User {
 
     @ManyToOne
-    @JoinColumn(name = "advogado", nullable = true) // TODO: desativar 'nullable'
+    @JoinColumn(name = "advogado")
     private Advogado lawyer;
 
-    // TODO: remover construtores
-    public Parte() {}
-    public Parte(String cpf, String password) {
-        super.setCpf(cpf);
-        super.setPassword(password);
-        super.setName("Josnei");
-        super.setEmail("josnei@email.com");
-        super.setDateOfBirth(new Date());
-        super.setAddress(new Address(
-            "80610150", "Rua das Flores", 753,
-            "Apartamento 65", "Curitiba", "PR"
-        ));
+    public Parte() {
+        super();
+    }
+
+    public Parte(String cpf, String password, String name, Date dateOfBirth, String email, Address address, Advogado lawyer) {
+        super(cpf, password, name, dateOfBirth, email, address);
+        this.lawyer = lawyer;
     }
 
     public Advogado getLawyer() {

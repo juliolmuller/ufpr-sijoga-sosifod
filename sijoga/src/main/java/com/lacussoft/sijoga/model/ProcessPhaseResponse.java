@@ -10,11 +10,17 @@ import javax.persistence.Enumerated;
 public class ProcessPhaseResponse implements Serializable {
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private ProcessPhaseResponseStatus status;
 
-    @Column(name = "response")
+    @Column(name = "resposta")
     private String description;
+
+    public ProcessPhaseResponse() {}
+
+    public ProcessPhaseResponse(ProcessPhaseResponseStatus status, String description) {
+        this.description = description;
+        this.status = status;
+    }
 
     public ProcessPhaseResponseStatus getStatus() {
         return status;

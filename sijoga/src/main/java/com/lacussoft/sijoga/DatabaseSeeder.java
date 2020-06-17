@@ -5,10 +5,15 @@ import com.lacussoft.sijoga.model.Advogado;
 import com.lacussoft.sijoga.model.Juiz;
 import com.lacussoft.sijoga.model.Parte;
 import com.lacussoft.sijoga.model.Process;
+import com.lacussoft.sijoga.model.ProcessPhase;
+import com.lacussoft.sijoga.model.ProcessPhaseResponse;
+import com.lacussoft.sijoga.model.ProcessPhaseResponseStatus;
 import com.lacussoft.sijoga.services.Dao;
 import com.thedeanda.lorem.Lorem;
 import com.thedeanda.lorem.LoremIpsum;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.stream.Stream;
 import javax.ejb.EJB;
 import javax.servlet.ServletConfig;
@@ -21,8 +26,9 @@ public class DatabaseSeeder extends HttpServlet {
     private Advogado[] lawyers;
     private Parte[] parties;
     private Process[] processes;
+    private ProcessPhase[] phases;
 
-    private Lorem lorem = LoremIpsum.getInstance();
+    private final Lorem lorem = LoremIpsum.getInstance();
 
     @EJB
     private Dao dao;
@@ -33,20 +39,24 @@ public class DatabaseSeeder extends HttpServlet {
 
         System.out.println("SIJOGA: seeding database...");
 
-        seedUsers();
+        seedJudges();
+        seedLawyers();
+        seedParties();
         seedProcesses();
+        seedProcessPhases();
 
-        System.out.println("SIJOGA: seeding complete.");
+        System.out.println("SIJOGA: seeding completed.");
     }
 
     private <T> T random(T[] array) {
         int len = array.length;
         int index = (int) Math.round(Math.random() * len) % len;
+
         return array[index];
     }
 
-    private void seedUsers() {
-        System.out.println("SIJOGA:     Seeding users...");
+    private void seedJudges() {
+        System.out.println("SIJOGA:     Seeding judges ('Juiz' model)...");
 
         Stream.of(judges = new Juiz[] {
             new Juiz("1", "1", "Juiz da Silva", new Date(), "juiz@email.com", new Address("80610150", "Rua Morretes", 753, null, "Curitiba",  "PR")),
@@ -54,6 +64,10 @@ public class DatabaseSeeder extends HttpServlet {
             new Juiz("63837430073", "63837430073", "Marcos Nespolo", new Date(), "marcos@email.com", new Address("69029285", "Rua Matsunaga",         200, null,       "Curitiba",  "PR")),
             new Juiz("22649526798", "22649526798", "André Shizuo",   new Date(), "andre@email.com",  new Address("13015180", "Praça Anita Garibaldi", 486, null,       "São Paulo", "SP"))
         }).forEach(dao::create);
+    }
+
+    private void seedLawyers() {
+        System.out.println("SIJOGA:     Seeding lawyers ('Advogado' model)...");
 
         Stream.of(lawyers = new Advogado[] {
             new Advogado("2", "2", "Advogado da Silva", new Date(), "advogado@email.com", new Address("80610150", "Rua Morretes", 753, null, "Curitiba",  "PR"), "12345"),
@@ -63,6 +77,10 @@ public class DatabaseSeeder extends HttpServlet {
             new Advogado("20165379812", "20165379812", "David Machado",  new Date(), "david@email.com",   new Address("13015180", "Praça Anita Garibaldi", 992, "Apt 86C",  "Curitiba",  "PR"), "7053"),
             new Advogado("81160961506", "81160961506", "Lucas Moreira",  new Date(), "lucas@email.com",   new Address("57055265", "Rua Anita Cajado",      715, "Casa 3",   "Curitiba",  "PR"), "6050")
         }).forEach(dao::create);
+    }
+
+    private void seedParties() {
+        System.out.println("SIJOGA:     Seeding parties ('Parte' model)...");
 
         Stream.of(parties = new Parte[] {
             new Parte("3", "3", "Parte da Silva", new Date(), "parte@email.com", new Address("80610150", "Rua Morretes", 753, null, "Curitiba",  "PR"), random(lawyers)),
@@ -81,26 +99,23 @@ public class DatabaseSeeder extends HttpServlet {
     }
 
     private void seedProcesses() {
-        System.out.println("SIJOGA:     Seeding processes...");
+        System.out.println("SIJOGA:     Seeding processes ('Process' model)...");
 
-        Stream.of(processes = new Process[] {
-            factory(), factory(), factory(), factory(), factory(), factory(), factory(), factory(),
-            factory(), factory(), factory(), factory(), factory(), factory(), factory(), factory(),
-            factory(), factory(), factory(), factory(), factory(), factory(), factory(), factory(),
-            factory(), factory(), factory(), factory(), factory(), factory(), factory(), factory(),
-            factory(), factory(), factory(), factory(), factory(), factory(), factory(), factory(),
-            factory(), factory(), factory(), factory(), factory(), factory(), factory(), factory(),
-            factory(), factory(), factory(), factory(), factory(), factory(), factory(), factory(),
-            factory(), factory(), factory(), factory(), factory(), factory(), factory(), factory()
-        }).forEach(dao::create);
+        processes = new Process[64];
+        for (int i = 0; i < processes.length; i++) {
+            processes[i] = makeProcess();
+            dao.create(processes[i]);
+        }
     }
 
-    private Process factory() {
+    private Process makeProcess() {
         Parte promoter, promoted;
+
         do {
             promoter = random(parties);
             promoted = random(parties);
-        } while (promoter.getId().equals(promoted.getId()));
+        } while (promoter == promoted);
+
         return new Process(
             lorem.getWords(5, 30),
             random(judges),
@@ -109,5 +124,51 @@ public class DatabaseSeeder extends HttpServlet {
             promoter.getLawyer(),
             promoted.getLawyer()
         );
+    }
+
+    private void seedProcessPhases() {
+        System.out.println("SIJOGA:     Seeding process phases ('ProcessPhase' model)...");
+
+        List<ProcessPhase> phases = new LinkedList<>();
+        for (int i = 0; i < processes.length; i++) {
+            int phasesCount = (int) Math.round(Math.random() * 4) % 4 + 1;
+            for (int j = 0; j < phasesCount; j++) {
+                phases.add(makeProcessPhase(processes[i]));
+            }
+        }
+
+        this.phases = new ProcessPhase[phases.size()];
+        phases.toArray(this.phases);
+        Stream.of(this.phases).forEach(dao::create);
+    }
+
+    private ProcessPhase makeProcessPhase(Process process) {
+        ProcessPhaseResponse response = random(new ProcessPhaseResponse[] { null, makeProcessPhaseResponse() });
+        Advogado[] lawyers = new Advogado[] {
+            process.getPromoter().getLawyer(),
+            process.getPromoted().getLawyer()
+        };
+
+        return new ProcessPhase(
+            process,
+            lorem.getTitle(1, 10),
+            lorem.getWords(10, 30),
+            response,
+            random(lawyers),
+            response == null ? null : process.getJudge(),
+            response == null ? null : new Date()
+        );
+    }
+
+    private ProcessPhaseResponse makeProcessPhaseResponse() {
+        ProcessPhaseResponseStatus[] statuses = ProcessPhaseResponseStatus.values();
+        ProcessPhaseResponseStatus status = random(statuses);
+        String description = null;
+
+        if (status.equals(ProcessPhaseResponseStatus.REJECTED) || status.equals(ProcessPhaseResponseStatus.CLOSED)) {
+            description = lorem.getWords(10, 20);
+        }
+
+        return new ProcessPhaseResponse(status, description);
     }
 }

@@ -14,7 +14,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Table(name = "tb_fases_processo")
@@ -49,12 +48,23 @@ public class ProcessPhase implements Comparable<ProcessPhase>, Serializable {
     private Date createdAt;
 
     @ManyToOne
-    @JoinColumn(name = "executado_por", nullable = false)
+    @JoinColumn(name = "executado_por")
     private Juiz executedBy;
 
-    @UpdateTimestamp
-    @Column(name = "executado_em", nullable = false)
+    @Column(name = "executado_em")
     private Date executedAt;
+
+    public ProcessPhase() {}
+
+    public ProcessPhase(Process process, String title, String description, ProcessPhaseResponse response, Advogado createdBy, Juiz executedBy, Date executedAt) {
+        this.description = description;
+        this.executedAt = executedAt;
+        this.executedBy = executedBy;
+        this.createdBy = createdBy;
+        this.response = response;
+        this.process = process;
+        this.title = title;
+    }
 
     @Override
     public int compareTo(ProcessPhase phase) {

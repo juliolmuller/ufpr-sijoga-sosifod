@@ -37,6 +37,15 @@ public class ProcessPhaseAttachment implements Comparable<ProcessPhaseAttachment
     @Column(name = "enviado_em", nullable = false)
     private Date uploadedAt;
 
+    public ProcessPhaseAttachment() {}
+
+    public ProcessPhaseAttachment(ProcessPhase processPhase, String fileName, String contentType, User uploadedBy) {
+        this.processPhase = processPhase;
+        this.contentType = contentType;
+        this.uploadedBy = uploadedBy;
+        this.fileName = fileName;
+    }
+
     @Override
     public int compareTo(ProcessPhaseAttachment attachment) {
         return attachment.uploadedAt.compareTo(uploadedAt);

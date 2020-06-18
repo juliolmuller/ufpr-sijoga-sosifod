@@ -6,11 +6,15 @@ import com.lacussoft.sijoga.model.Juiz;
 import com.lacussoft.sijoga.model.Parte;
 import com.lacussoft.sijoga.model.Process;
 import com.lacussoft.sijoga.model.ProcessPhase;
+import com.lacussoft.sijoga.model.ProcessPhaseAttachment;
 import com.lacussoft.sijoga.model.ProcessPhaseResponse;
 import com.lacussoft.sijoga.model.ProcessPhaseResponseStatus;
 import com.lacussoft.sijoga.services.Dao;
+import com.lacussoft.utils.IO;
 import com.thedeanda.lorem.Lorem;
 import com.thedeanda.lorem.LoremIpsum;
+import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -27,6 +31,7 @@ public class DatabaseSeeder extends HttpServlet {
     private Parte[] parties;
     private Process[] processes;
     private ProcessPhase[] phases;
+    private ProcessPhaseAttachment[] attachments;
 
     private final Lorem lorem = LoremIpsum.getInstance();
 
@@ -44,6 +49,11 @@ public class DatabaseSeeder extends HttpServlet {
         seedParties();
         seedProcesses();
         seedProcessPhases();
+        try {
+            seedProcessPhaseAttachments();
+        } catch (IOException ex) {
+            throw new ServletException(ex);
+        }
 
         System.out.println("SIJOGA: seeding completed.");
     }
@@ -170,5 +180,37 @@ public class DatabaseSeeder extends HttpServlet {
         }
 
         return new ProcessPhaseResponse(status, description);
+    }
+
+    private void seedProcessPhaseAttachments() throws IOException {
+        System.out.println("SIJOGA:     Seeding process phase attachments ('ProcessPhaseAttachment' model)...");
+
+        attachments = new ProcessPhaseAttachment[phases.length];
+
+        for (int i = 0; i < phases.length; i++) {
+            attachments[i] = makeProcessPhaseAttachment(phases[i]);
+        }
+
+        Stream.of(attachments).forEach(dao::create);
+    }
+
+    private ProcessPhaseAttachment makeProcessPhaseAttachment(ProcessPhase phase) {
+        String storagePath = getServletContext().getRealPath("/WEB-INF/storage");
+        String fileName = phase.getProcess().getId() + "_" + phase.getId() + "_processo.pdf";
+        File template = new File(storagePath, "processo.pdf");
+        File process = new File(storagePath, fileName);
+
+        try {
+            IO.copyFile(template, process);
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
+
+        return new ProcessPhaseAttachment(
+            phase,
+            fileName,
+            "application/pdf",
+            phase.getCreatedBy()
+        );
     }
 }

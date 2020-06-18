@@ -39,6 +39,7 @@
                             <f:validateRequired />
                             <f:converter converterId="numbersOnly" />
                             <f:validator validatorId="cpf" />
+                            <f:validator binding="#{uniqueCpfValidator}" />
                         </h:inputText>
                     </div>
                     <div class="mb-3 p-1">

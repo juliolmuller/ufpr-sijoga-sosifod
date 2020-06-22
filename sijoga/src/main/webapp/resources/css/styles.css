@@ -38,7 +38,7 @@ main.main {
     margin-top: 76px;
 }
 
-.div-itens {
+.processes {
     width: 800px;
     margin: 0px auto;
     margin-bottom: 30px;
@@ -134,11 +134,14 @@ main.main {
     font-size: 16px;
 }
 
-#lista {
-    margin: 0px;
+.process-card-deck {
     list-style: none;
-    padding: 0;
-    padding-top: 12px;
+    padding: 1em 0
+}
+
+.process-card {
+    margin-top: 1em;
+    margin-bottom: 1em;
 }
 
 #filtros {
@@ -202,11 +205,12 @@ main.main {
     outline: 0;
 }
 
-#novo-processo {
+.new-process-btn {
     position: fixed;
     display: flex;
     color: white;
     justify-content: center;
+    align-items: center;
     background-color: black;
     text-decoration: none;
     outline: 0;
@@ -222,18 +226,18 @@ main.main {
 }
 
 @media only screen and (max-width: 700px) and (min-width: 360px) {
-    
+
     body {
         width: 100%;
     }
-    
+
     .header-logo {
         width: 50%;
         padding-left: 8px;
         padding-top: 12px;
     }
 
-    .div-itens {
+    .processes {
         margin: 0 auto;
         margin-bottom: 30px;
         margin-top: 105px;
@@ -241,7 +245,7 @@ main.main {
         min-height: 100vh;
         padding: 0px 10px 10px 10px;
     }
-    
+
     .user-welcome {
         text-align: right;
         float: right;
@@ -250,7 +254,7 @@ main.main {
         margin-top: 5px;
         width: 30%;
     }
-    
+
     .filtro {
         display: block-inline;
         margin-right: 5px;
@@ -258,14 +262,14 @@ main.main {
         font-size: 12px;
         border-bottom: 0.5px #000 solid;
     }
-    
+
     #filtros {
         font-size: 12px;
         margin: 12px;
         margin-right: 0px;
         float: right;
     }
-    
+
     #btn-logout {
         display: flex;
         float: right;

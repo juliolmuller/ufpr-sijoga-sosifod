@@ -27,22 +27,6 @@
                     <option>Encerrado</option>
                 </select>
             </div>
-            <div id="div-filtro-parte" style="display: inline-block;">
-                Parte:
-                <select class="filtro" id="filtro-parte">
-                    <option>Todos</option>
-                    <option>Promovido</option>
-                    <option>Promovente</option>
-                </select>
-            </div>
-            <div id="div-filtro-conclusao" style="display: inline-block;">
-                Conslusão:
-                <select class="filtro" id="filtro-conclusao">
-                    <option>Todos</option>
-                    <option>Ganhou</option>
-                    <option>Perdeu</option>
-                </select>
-            </div>
         </div>
     </ui:define>
 
@@ -50,10 +34,17 @@
         <h:panelGroup id="alerts" layout="block">
             <my:toasts messages="#{facesContext.messageList}" />
         </h:panelGroup>
-        <div class="div-itens">
-            <ul id="lista"></ul>
+        <div class="processes">
+            <div class="process-card-deck">
+                <ui:repeat var="process" value="#{indexBean.processes}">
+                    <div class="process-card d-flex justify-content-between">
+                        <span>#{process.id} (<b>Juiz:</b> #{process.judge.name} - <b>Promovente:</b> #{process.promoter.name} - <b>Promovido:</b> #{process.promoted.name})</span>
+                        <h:link value="Visualizar" outcome="processos?id=#{process.id}" />
+                    </div>
+                </ui:repeat>
+            </div>
         </div>
-        <h:button id="novo-processo" value="+ Novo Processo" outcome="processo" />
+        <h:link styleClass="new-process-btn" value="+ Novo Processo" outcome="processos?action=new" />
     </ui:define>
 
 </ui:composition>

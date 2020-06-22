@@ -6,6 +6,7 @@ import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.Stateless;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -37,5 +38,9 @@ public class Dao implements Serializable {
 
     public Query query(String hql) {
         return session.createQuery(hql);
+    }
+
+    public Criteria criteria(Class clazz) {
+        return session.createCriteria(clazz);
     }
 }

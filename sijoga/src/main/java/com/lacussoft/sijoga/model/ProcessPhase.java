@@ -1,6 +1,5 @@
 package com.lacussoft.sijoga.model;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 import java.util.TreeSet;
@@ -17,7 +16,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Table(name = "tb_fases_processo")
-public class ProcessPhase implements Comparable<ProcessPhase>, Serializable {
+public class ProcessPhase implements Model, Comparable<ProcessPhase> {
 
     @Id
     @GeneratedValue

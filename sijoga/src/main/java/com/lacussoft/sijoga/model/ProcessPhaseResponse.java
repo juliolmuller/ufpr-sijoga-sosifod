@@ -1,13 +1,12 @@
 package com.lacussoft.sijoga.model;
 
-import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
 @Embeddable
-public class ProcessPhaseResponse implements Serializable {
+public class ProcessPhaseResponse implements Model {
 
     @Enumerated(EnumType.STRING)
     private ProcessPhaseResponseStatus status;

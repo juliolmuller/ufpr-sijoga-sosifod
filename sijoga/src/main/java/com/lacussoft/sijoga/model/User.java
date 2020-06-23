@@ -1,7 +1,6 @@
 package com.lacussoft.sijoga.model;
 
 import com.lacussoft.utils.SecurityUtil;
-import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
@@ -19,7 +18,7 @@ import javax.persistence.TemporalType;
 @Table(name = "tb_usuarios")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "perfil")
-public abstract class User implements Serializable {
+public abstract class User implements Model {
 
     private static final String HASH_PREFIX = "@SIJOGA::";
 

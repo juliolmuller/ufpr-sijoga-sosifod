@@ -1,6 +1,5 @@
 package com.lacussoft.sijoga.model;
 
-import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,7 +12,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Table(name = "tb_anexos_processo")
-public class ProcessPhaseAttachment implements Comparable<ProcessPhaseAttachment>, Serializable {
+public class ProcessPhaseAttachment implements Model, Comparable<ProcessPhaseAttachment> {
 
     @Id
     @GeneratedValue

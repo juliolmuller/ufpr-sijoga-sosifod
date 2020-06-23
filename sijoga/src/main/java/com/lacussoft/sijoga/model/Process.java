@@ -1,6 +1,5 @@
 package com.lacussoft.sijoga.model;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 import java.util.TreeSet;
@@ -17,7 +16,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Table(name = "tb_processos")
-public class Process implements Serializable {
+public class Process implements Model {
 
     @Id
     @GeneratedValue

@@ -1,11 +1,10 @@
 package com.lacussoft.sijoga.model;
 
-import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
-public class Address implements Serializable {
+public class Address implements Model {
 
     @Column(name = "cep", nullable = false, length = 8)
     private String zipCode;

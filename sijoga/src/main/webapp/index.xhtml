@@ -44,7 +44,7 @@
                 </ui:repeat>
             </div>
         </div>
-        <h:link styleClass="new-process-btn" value="+ Novo Processo" outcome="processos?action=new" />
+        <h:link styleClass="new-process-btn" value="+ Novo Processo" outcome="processos?action=new" rendered="#{sessionScope.user.role == 'Advogado'}" />
     </ui:define>
 
 </ui:composition>

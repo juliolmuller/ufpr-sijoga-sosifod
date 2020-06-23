@@ -9,7 +9,7 @@ import com.lacussoft.sijoga.model.ProcessPhase;
 import com.lacussoft.sijoga.model.ProcessPhaseAttachment;
 import com.lacussoft.sijoga.model.ProcessPhaseResponse;
 import com.lacussoft.sijoga.model.ProcessPhaseResponseStatus;
-import com.lacussoft.sijoga.services.Dao;
+import com.lacussoft.sijoga.services.DaoFacade;
 import com.lacussoft.utils.IO;
 import com.thedeanda.lorem.Lorem;
 import com.thedeanda.lorem.LoremIpsum;
@@ -36,7 +36,7 @@ public class DatabaseSeeder extends HttpServlet {
     private final Lorem lorem = LoremIpsum.getInstance();
 
     @EJB
-    private Dao dao;
+    private DaoFacade dao;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -73,7 +73,7 @@ public class DatabaseSeeder extends HttpServlet {
             new Juiz("09434959208", "09434959208", "Júlio Müller",   new Date(), "julio@email.com",  new Address("69029285", "Rua do Lago Nessy",     400, "Apt 34-B", "Curitiba",  "PR")),
             new Juiz("63837430073", "63837430073", "Marcos Nespolo", new Date(), "marcos@email.com", new Address("69029285", "Rua Matsunaga",         200, null,       "Curitiba",  "PR")),
             new Juiz("22649526798", "22649526798", "André Shizuo",   new Date(), "andre@email.com",  new Address("13015180", "Praça Anita Garibaldi", 486, null,       "São Paulo", "SP"))
-        }).forEach(dao::create);
+        }).forEach(dao::save);
     }
 
     private void seedLawyers() {
@@ -86,7 +86,7 @@ public class DatabaseSeeder extends HttpServlet {
             new Advogado("90498121209", "90498121209", "Aurélio Vidal",  new Date(), "aurelio@email.com", new Address("13015180", "Praça Anita Garibaldi", 288, "apto 109", "São Paulo", "SP"), "4321"),
             new Advogado("20165379812", "20165379812", "David Machado",  new Date(), "david@email.com",   new Address("13015180", "Praça Anita Garibaldi", 992, "Apt 86C",  "Curitiba",  "PR"), "7053"),
             new Advogado("81160961506", "81160961506", "Lucas Moreira",  new Date(), "lucas@email.com",   new Address("57055265", "Rua Anita Cajado",      715, "Casa 3",   "Curitiba",  "PR"), "6050")
-        }).forEach(dao::create);
+        }).forEach(dao::save);
     }
 
     private void seedParties() {
@@ -105,16 +105,16 @@ public class DatabaseSeeder extends HttpServlet {
             new Parte("90498121208", "90498121208", "Giovana Cardoso",  new Date(), "giovana@email.com",  new Address("13015180", "Praça Anita Garibaldi",   997, "casa 6",    "Rio de Janeiro", "RJ"), random(lawyers)),
             new Parte("09434959209", "09434959209", "Pedro Krepsky",    new Date(), "pedro@email.com",    new Address("80610150", "Rua Morretes",            753, null,        "Porto Alegre",   "RS"), random(lawyers)),
             new Parte("88931040083", "88931040083", "Mariano Costa",    new Date(), "mariano@email.com",  new Address("13015180", "Praça Anita Garibaldi",   611, "Apto 80",   "Rio de Janeiro", "RJ"), random(lawyers))
-        }).forEach(dao::create);
+        }).forEach(dao::save);
     }
 
     private void seedProcesses() {
         System.out.println("SIJOGA:     Seeding processes ('Process' model)...");
 
-        processes = new Process[64];
+        processes = new Process[parties.length * 3];
         for (int i = 0; i < processes.length; i++) {
             processes[i] = makeProcess();
-            dao.create(processes[i]);
+            dao.save(processes[i]);
         }
     }
 
@@ -149,7 +149,7 @@ public class DatabaseSeeder extends HttpServlet {
 
         this.phases = new ProcessPhase[phases.size()];
         phases.toArray(this.phases);
-        Stream.of(this.phases).forEach(dao::create);
+        Stream.of(this.phases).forEach(dao::save);
     }
 
     private ProcessPhase makeProcessPhase(Process process) {
@@ -191,7 +191,7 @@ public class DatabaseSeeder extends HttpServlet {
             attachments[i] = makeProcessPhaseAttachment(phases[i]);
         }
 
-        Stream.of(attachments).forEach(dao::create);
+        Stream.of(attachments).forEach(dao::save);
     }
 
     private ProcessPhaseAttachment makeProcessPhaseAttachment(ProcessPhase phase) {

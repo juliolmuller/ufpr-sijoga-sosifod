@@ -2,7 +2,7 @@ package com.lacussoft.sijoga.bean;
 
 import com.lacussoft.sijoga.model.Process;
 import com.lacussoft.sijoga.model.User;
-import com.lacussoft.sijoga.services.Dao;
+import com.lacussoft.sijoga.services.DaoFacade;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
@@ -22,7 +22,7 @@ import org.hibernate.criterion.Restrictions;
 public class IndexBean implements Serializable {
 
     @EJB
-    private Dao dao;
+    private DaoFacade dao;
 
     @Inject
     private ExternalContext externalContext;
@@ -31,7 +31,7 @@ public class IndexBean implements Serializable {
         HttpSession httpSession = (HttpSession) externalContext.getSession(false);
         User user = (User) httpSession.getAttribute("user");
 
-        Criteria criteria = dao.criteria(Process.class);
+        Criteria criteria = dao.createCriteria(Process.class);
         criteria.createAlias("promoter.lawyer", "promoterLawyer");
         criteria.createAlias("promoted.lawyer", "promotedLawyer");
         criteria.add(Restrictions.or(

@@ -1,5 +1,6 @@
 package com.lacussoft.sijoga.services;
 
+import com.lacussoft.sijoga.model.Model;
 import com.lacussoft.sijoga.model.User;
 import com.lacussoft.utils.HibernateUtil;
 import java.io.Serializable;
@@ -11,7 +12,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 
 @Stateless
-public class Dao implements Serializable {
+public class DaoFacade implements Serializable {
 
     private Session session;
 
@@ -25,7 +26,7 @@ public class Dao implements Serializable {
         session.close();
     }
 
-    public void create(Object model) {
+    public void save(Model model) {
 
         if (model instanceof User) {
             ((User) model).hashPassword();
@@ -36,11 +37,11 @@ public class Dao implements Serializable {
         session.getTransaction().commit();
     }
 
-    public Query query(String hql) {
+    public Query createQuery(String hql) {
         return session.createQuery(hql);
     }
 
-    public Criteria criteria(Class clazz) {
+    public <T extends Model> Criteria createCriteria(Class<T> clazz) {
         return session.createCriteria(clazz);
     }
 }

@@ -1,7 +1,7 @@
 package com.lacussoft.sijoga.validation;
 
 import com.lacussoft.sijoga.model.User;
-import com.lacussoft.sijoga.services.Dao;
+import com.lacussoft.sijoga.services.DaoFacade;
 import com.lacussoft.utils.Converter;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
@@ -20,7 +20,7 @@ public class UniqueCpfValidator implements Validator {
     public final static String INVALID_MESSAGE = "CPF já cadastrado.";
 
     @EJB
-    private Dao dao;
+    private DaoFacade dao;
 
     @Override
     public void validate(FacesContext context, UIComponent ui, Object value) throws ValidatorException {
@@ -29,7 +29,7 @@ public class UniqueCpfValidator implements Validator {
 
         if (cpf != null) {
             String hql = "FROM User u WHERE u.cpf = :cpf";
-            Query query = dao.query(hql).setString("cpf", cpf);
+            Query query = dao.createQuery(hql).setString("cpf", cpf);
             User user = (User) query.uniqueResult();
 
             if (user != null) {

@@ -4,7 +4,7 @@ import com.lacussoft.sijoga.model.AccessRole;
 import com.lacussoft.sijoga.model.Address;
 import com.lacussoft.sijoga.model.Advogado;
 import com.lacussoft.sijoga.model.User;
-import com.lacussoft.sijoga.services.Dao;
+import com.lacussoft.sijoga.services.DaoFacade;
 import com.lacussoft.utils.Converter;
 import java.io.Serializable;
 import java.util.Date;
@@ -31,7 +31,7 @@ public class UserFormBean implements Serializable {
     private String password2;
 
     @EJB
-    private Dao dao;
+    private DaoFacade dao;
 
     @Inject
     private FacesContext context;
@@ -51,7 +51,7 @@ public class UserFormBean implements Serializable {
             ((Advogado) user).setOab(oab);
         }
 
-        dao.create(user);
+        dao.save(user);
 
         String successMsg = "Usuário criado com sucesso.";
         context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, successMsg, successMsg));

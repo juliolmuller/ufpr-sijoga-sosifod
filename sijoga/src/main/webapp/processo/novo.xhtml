@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:my="http://lacussoft.com/sijoga/tags">
+
+    <ui:define name="content">
+        <div class="container">
+            <h:panelGroup id="alerts" layout="block">
+                <my:toasts messages="#{facesContext.messageList}" />
+            </h:panelGroup>
+
+            <h:form id="signup-form" prependId="false">
+                <div class="row">
+                    <div class="col-12 mb-3 p-1">
+                        <h:outputLabel for="description" value="Descrição:" /><br/>
+                        <h:inputTextarea id="description" rows="3" value="#{processBean.description}">
+                            <f:validateLength maximum="255" />
+                        </h:inputTextarea>
+                    </div>
+                </div>
+                <h4>Dados do Promovente</h4>
+                <div class="row">
+                    <div class="mb-3 p-1">
+                        <h:outputLabel for="promoterCpf" value="CPF do Promovente:" /><br/>
+                        <div>
+                            <h:inputText id="promoterCpf" label="CPF do Promovente" value="#{processBean.promoterCpf}" styleClass="mask-cpf">
+                                <f:converter converterId="numbersOnly" />
+                                <f:validator validatorId="cpf" />
+                            </h:inputText>
+                            <h:commandButton value="Buscar" />
+                        </div>
+                    </div>
+                    <h:panelGroup layout="block" rendered="#{processBean.promoter != null}" styleClass="col-12 mb-3 p-1">
+                        <p class="font-weight-bold">
+                            <h:outputText value="#{processBean.promoter.name}" />
+                        </p>
+                        <p>
+                            Nascido em
+                            <h:outputText value="#{processBean.promoter.dateOfBirth}">
+                                <f:convertDateTime locale="pt-BR" pattern="dd-MMMM-yyyy" />
+                            </h:outputText>
+                        </p>
+                        <p>
+                            <h:outputText value="#{processBean.promoter.address.street}" />,
+                            <h:outputText value="#{processBean.promoter.address.number}" />
+                            <h:panelGroup rendered="#{processBean.promoter.address.complement != null}">
+                                (<h:outputText value="#{processBean.promoter.address.complement}" />)
+                            </h:panelGroup>
+                        </p>
+                        <p>
+                            <h:outputText value="#{processBean.promoter.address.city}" />,
+                            <h:outputText value="#{processBean.promoter.address.state}" />,
+                            <h:outputText value="#{processBean.promoter.address.zipCode}" />
+                        </p>
+                    </h:panelGroup>
+                </div>
+                <h4>Dados do Promovido</h4>
+                <div class="row">
+                    <div class="mb-3 p-1">
+                        <h:outputLabel for="promotedCpf" value="CPF do Promovido:" /><br/>
+                        <div>
+                            <h:inputText id="promotedCpf" label="CPF do Promovido" value="#{processBean.promotedCpf}" styleClass="mask-cpf">
+                                <f:converter converterId="numbersOnly" />
+                                <f:validator validatorId="cpf" />
+                            </h:inputText>
+                            <h:commandButton value="Buscar" />
+                        </div>
+                    </div>
+                    <h:panelGroup layout="block" rendered="#{processBean.promoted != null}" styleClass="col-12 mb-3 p-1">
+                        <p class="font-weight-bold">
+                            <h:outputText value="#{processBean.promoted.name}" />
+                        </p>
+                        <p>
+                            Nascido em
+                            <h:outputText value="#{processBean.promoted.dateOfBirth}">
+                                <f:convertDateTime locale="pt-BR" pattern="dd-MMMM-yyyy" />
+                            </h:outputText>
+                        </p>
+                        <p>
+                            <h:outputText value="#{processBean.promoted.address.street}" />,
+                            <h:outputText value="#{processBean.promoted.address.number}" />
+                            <h:panelGroup rendered="#{processBean.promoted.address.complement != null}">
+                                (<h:outputText value="#{processBean.promoted.address.complement}" />)
+                            </h:panelGroup>
+                        </p>
+                        <p>
+                            <h:outputText value="#{processBean.promoted.address.city}" />,
+                            <h:outputText value="#{processBean.promoted.address.state}" />,
+                            <h:outputText value="#{processBean.promoted.address.zipCode}" />
+                        </p>
+                    </h:panelGroup>
+                </div>
+                <h:link value="Cancelar" outcome="/index" />
+                <h:commandButton value="Criar Processo" action="#{processBean.createProcess()}" />
+            </h:form>
+        </div>
+    </ui:define>
+
+</ui:composition>

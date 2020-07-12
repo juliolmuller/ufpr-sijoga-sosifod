@@ -15,14 +15,64 @@
                 <my:toasts messages="#{facesContext.messageList}" />
             </h:panelGroup>
 
-            <h:form id="signup-form" prependId="false">
+            <h:panelGroup rendered="#{processBean.process == null}">
                 <div class="row">
                     <div class="mb-3 p-1">
-                        Implementação pendente...
+                        Processo não encontrado.
                     </div>
                 </div>
-                <h:link value="Voltar" outcome="/index" />
-            </h:form>
+            </h:panelGroup>
+
+            <h:panelGroup rendered="#{processBean.process != null}">
+                <h:form id="signup-form" prependId="false">
+                    <h2>Processo ##{processBean.process.id}</h2>
+                    <div class="row">
+                        <div class="mb-3 p-1">
+                            <h4>Descrição:</h4>
+                            #{processBean.process.description}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-3 font-weight-bold">
+                            Juíz do caso:
+                        </div>
+                        <div class="col-12 col-md-9">
+                            #{processBean.process.judge.name}
+                            (ID ##{processBean.process.judge.id})
+                        </div>
+                        <div class="col-12 col-md-3 font-weight-bold">
+                            Parte promovente:
+                        </div>
+                        <div class="col-12 col-md-9">
+                            #{processBean.process.promoter.name}
+                            (CPF #{processBean.process.promoter.cpf})
+                        </div>
+                        <div class="col-12 col-md-3 font-weight-bold">
+                            Advogado de acusação:
+                        </div>
+                        <div class="col-12 col-md-9">
+                            #{processBean.process.promoter.lawyer.name}
+                            (OAB ##{processBean.process.promoter.lawyer.oab})
+                        </div>
+                        <div class="col-12 col-md-3 font-weight-bold">
+                            Parte promovida:
+                        </div>
+                        <div class="col-12 col-md-9">
+                            #{processBean.process.promoted.name}
+                            (CPF #{processBean.process.promoted.cpf})
+                        </div>
+                        <div class="col-12 col-md-3 font-weight-bold">
+                            Advogado de defesa
+                        </div>
+                        <div class="col-12 col-md-9">
+                            #{processBean.process.promoted.lawyer.name}
+                            (OAB ##{processBean.process.promoted.lawyer.oab})
+                        </div>
+                    </div>
+                </h:form>
+            </h:panelGroup>
+
+            <h:link value="Voltar" outcome="/index" />
         </div>
     </ui:define>
 

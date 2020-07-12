@@ -11,6 +11,7 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.annotation.RequestParameterMap;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -26,6 +27,11 @@ public class ProcessBean {
     private String promoterCpf;
     private String promotedCpf;
     private User currentUser;
+    private Process process;
+
+    @Inject
+    @RequestParameterMap
+    private Map<String, String> querystring;
 
     @Inject
     private FacesContext context;
@@ -40,6 +46,11 @@ public class ProcessBean {
     public void init() {
         HttpSession session = (HttpSession) externalContext.getSession(false);
         currentUser = (User) session.getAttribute("user");
+
+        if (querystring.containsKey("id")) {
+            Long id = Long.parseLong(querystring.get("id"));
+            process = dao.find(id, Process.class);
+        }
     }
 
     public String createProcess() {
@@ -97,6 +108,14 @@ public class ProcessBean {
 
     public void setPromotedCpf(String cpf) {
         promotedCpf = cpf;
+    }
+
+    public Process getProcess() {
+        return process;
+    }
+
+    public void setProcess(Process process) {
+        this.process = process;
     }
 
     public Map<String, String> getClients() {

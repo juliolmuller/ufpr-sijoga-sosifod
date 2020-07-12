@@ -39,12 +39,12 @@
                 <ui:repeat var="process" value="#{indexBean.processes}">
                     <div class="process-card d-flex justify-content-between">
                         <span>#{process.id} (<b>Juiz:</b> #{process.judge.name} - <b>Promovente:</b> #{process.promoter.name} - <b>Promovido:</b> #{process.promoted.name})</span>
-                        <h:link value="Visualizar" outcome="processos?id=#{process.id}" />
+                        <h:link value="Visualizar" outcome="processo/index?id=#{process.id}" />
                     </div>
                 </ui:repeat>
             </div>
         </div>
-        <h:link styleClass="new-process-btn" value="+ Novo Processo" outcome="processos?action=new" rendered="#{sessionScope.user.role == 'Advogado'}" />
+        <h:link styleClass="new-process-btn" value="+ Novo Processo" outcome="processo/novo" rendered="#{sessionScope.user.role == 'Advogado'}" />
     </ui:define>
 
 </ui:composition>

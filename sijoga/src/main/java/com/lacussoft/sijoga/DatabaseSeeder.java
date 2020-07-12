@@ -81,7 +81,7 @@ public class DatabaseSeeder extends HttpServlet {
 
         Stream.of(lawyers = new Advogado[] {
             new Advogado("2", "2", "Advogado da Silva", new Date(), "advogado@email.com", new Address("80610150", "Rua Morretes", 753, null, "Curitiba",  "PR"), "12345"),
-            new Advogado("59851539594", "59851539594", "Wesley Caetano", new Date(), "vvesley@email.com", new Address("69029285", "Rua Le Parkour",        500, "Bloco A",  "Curitiba",  "PR"), "1234"),
+            new Advogado("99682359031", "99682359031", "Wesley Caetano", new Date(), "vvesley@email.com", new Address("69029285", "Rua Le Parkour",        500, "Bloco A",  "Curitiba",  "PR"), "1234"),
             new Advogado("46513906091", "46513906091", "Ana Nicole",     new Date(), "ana@email.com",     new Address("69029285", "Rua Gustavo Oliveira",  100, null,       "Curitiba",  "PR"), "1001"),
             new Advogado("90498121209", "90498121209", "Aurélio Vidal",  new Date(), "aurelio@email.com", new Address("13015180", "Praça Anita Garibaldi", 288, "apto 109", "São Paulo", "SP"), "4321"),
             new Advogado("20165379812", "20165379812", "David Machado",  new Date(), "david@email.com",   new Address("13015180", "Praça Anita Garibaldi", 992, "Apt 86C",  "Curitiba",  "PR"), "7053"),
@@ -96,7 +96,7 @@ public class DatabaseSeeder extends HttpServlet {
             new Parte("3", "3", "Parte da Silva", new Date(), "parte@email.com", new Address("80610150", "Rua Morretes", 753, null, "Curitiba",  "PR"), random(lawyers)),
             new Parte("22649526793", "22649526793", "Lucas Henrique",   new Date(), "lucas@email.com",    new Address("69029285", "Rua da Banda",            300, "Apt 65",    "Curitiba",       "PR"), random(lawyers)),
             new Parte("83128933006", "83128933006", "Matheus Teixeira", new Date(), "matheus@email.com",  new Address("69029285", "Rua Anita Garibald",      722, null,        "Rio de Janeiro", "RJ"), random(lawyers)),
-            new Parte("90534089241", "90534089241", "Cassiano Antunes", new Date(), "cassiano@email.com", new Address("40725074", "Rua Anita Cajado",        898, null,        "Curitiba",       "PR"), random(lawyers)),
+            new Parte("38001834042", "38001834042", "Cassiano Antunes", new Date(), "cassiano@email.com", new Address("40725074", "Rua Anita Cajado",        898, null,        "Curitiba",       "PR"), random(lawyers)),
             new Parte("08054962622", "08054962622", "Mariana Oliveira", new Date(), "mariana@email.com",  new Address("31210440", "Rua Anfibólios",          399, "apt. 88",   "São Paulo",      "SP"), random(lawyers)),
             new Parte("73812059479", "73812059479", "Gabriela Amaral",  new Date(), "gabriela@email.com", new Address("13405247", "Travessa Ângelo Valler",  670, null,        "Rio de Janeiro", "RJ"), random(lawyers)),
             new Parte("75932242108", "75932242108", "Marina Marins",    new Date(), "marina@email.com",   new Address("13405247", "Travessa Ângelo Valler",  298, "bloco 3",   "Porto Alegre",   "RS"), random(lawyers)),

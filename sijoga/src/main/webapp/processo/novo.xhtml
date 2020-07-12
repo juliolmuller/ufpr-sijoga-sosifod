@@ -29,10 +29,10 @@
                     <div class="mb-3 p-1">
                         <h:outputLabel for="promoterCpf" value="CPF do Promovente:" /><br/>
                         <div>
-                            <h:inputText id="promoterCpf" label="CPF do Promovente" value="#{processBean.promoterCpf}" styleClass="mask-cpf">
-                                <f:converter converterId="numbersOnly" />
-                                <f:validator validatorId="cpf" />
-                            </h:inputText>
+                            <h:selectOneMenu id="promoterCpf" label="CPF do Promovente" value="#{processBean.promoterCpf}">
+                                <f:selectItem noSelectionOption="true" />
+                                <f:selectItems var="cli" value="#{processBean.clients}" />
+                            </h:selectOneMenu>
                             <h:commandButton value="Buscar" />
                         </div>
                     </div>

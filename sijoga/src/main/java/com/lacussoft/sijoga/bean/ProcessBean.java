@@ -4,6 +4,10 @@ import com.lacussoft.sijoga.model.Parte;
 import com.lacussoft.sijoga.model.Process;
 import com.lacussoft.sijoga.model.User;
 import com.lacussoft.sijoga.services.DaoFacade;
+import com.lacussoft.utils.Converter;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
@@ -93,6 +97,16 @@ public class ProcessBean {
 
     public void setPromotedCpf(String cpf) {
         promotedCpf = cpf;
+    }
+
+    public Map<String, String> getClients() {
+        List<String> cpfs = dao
+            .createQuery("SELECT p.cpf FROM Parte p WHERE p.lawyer.id = :lawyerId")
+            .setLong("lawyerId", currentUser.getId())
+            .list();
+        Map<String, String> clients = new LinkedHashMap<>();
+        cpfs.forEach(c -> clients.put(Converter.toCpf(c), c));
+        return clients;
     }
 
     public Parte getPromoter() {

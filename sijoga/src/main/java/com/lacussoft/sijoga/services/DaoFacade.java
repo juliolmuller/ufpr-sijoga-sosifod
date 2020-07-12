@@ -65,6 +65,10 @@ public class DaoFacade implements Serializable {
         return criteria.list();
     }
 
+    public <T extends Model> T find(Serializable id, Class<T> clazz) {
+        return (T) session.get(clazz, id);
+    }
+
     public User findUserByCpf(String cpf)  {
         return (User) createQuery("FROM User u WHERE u.cpf = :cpf")
             .setString("cpf", cpf)

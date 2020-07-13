@@ -24,8 +24,9 @@
             </h:panelGroup>
 
             <h:panelGroup rendered="#{processBean.process != null}">
-                <h:form id="signup-form" prependId="false">
+                <h:form id="process-form" prependId="false">
                     <h2>Processo ##{processBean.process.id}</h2>
+                    <h:inputHidden value="#{processBean.processId}" />
                     <div class="row">
                         <div class="mb-3 p-1">
                             <h4>Descrição:</h4>
@@ -69,6 +70,47 @@
                             (OAB ##{processBean.process.promoted.lawyer.oab})
                         </div>
                     </div>
+                    <h:panelGroup layout="block" rendered="#{not processBean.phaseFormVisible}">
+                        <div class="row justify-content-end my-2">
+                            <h:commandButton value="+ Nova Fase}" action="#{processBean.viewPhaseForm()}" />
+                        </div>
+                        <style>
+                            thead th {
+                                color: #fff;
+                                background-color: #343a40;
+                                border-color: #454d55;
+                            }
+                            tr td:last-child {
+                                width: 152px;
+                            }
+                        </style>
+                        <h:dataTable value="#{processBean.processPhases}" var="p" rendered="#{processBean.processPhases.rowCount > 0}" styleClass="table table-hover">
+                            <h:column>
+                                <f:facet name="header">Título</f:facet>
+                                <h:outputText value="#{p.title}" />
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Status</f:facet>
+                                <h:outputText value="#{p.response.status.toString().toUpperCase()}" rendered="#{p.response != null}" />
+                                <h:outputText value="EM ANÁLISE" rendered="#{p.response == null}" />
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Criado em</f:facet>
+                                <h:outputText value="#{p.createdAt}">
+                                    <f:convertDateTime locale="pt-BR" pattern="dd-MMM-yyyy hh:mm" />
+                                </h:outputText>
+                            </h:column>
+                            <h:column>
+                                <h:commandLink value="Detalhes" action="#{processBean.viewPhaseForm(p.id)}" />
+                            </h:column>
+                        </h:dataTable>
+                    </h:panelGroup>
+                    <h:panelGroup layout="block" rendered="#{processBean.phaseFormVisible}">
+                        <h3>Faze de Processo ##{processBean.phase.id}</h3>
+                        <h4><h:outputText value="#{processBean.phase.title}" /></h4>
+                        <p><h:outputText value="#{processBean.phase.description}" /></p>
+                        <h:link value="Fechar" outcome="index?id=#{processBean.process.id}" />
+                    </h:panelGroup>
                 </h:form>
             </h:panelGroup>
 

@@ -2,6 +2,7 @@ package com.lacussoft.sijoga.bean;
 
 import com.lacussoft.sijoga.model.Parte;
 import com.lacussoft.sijoga.model.Process;
+import com.lacussoft.sijoga.model.ProcessPhase;
 import com.lacussoft.sijoga.model.User;
 import com.lacussoft.sijoga.services.DaoFacade;
 import com.lacussoft.utils.Converter;
@@ -15,6 +16,7 @@ import javax.faces.annotation.RequestParameterMap;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.model.ListDataModel;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
@@ -27,7 +29,10 @@ public class ProcessBean {
     private String promoterCpf;
     private String promotedCpf;
     private User currentUser;
+    private Long processId;
     private Process process;
+    private ProcessPhase phase;
+    private ListDataModel<ProcessPhase> processPhases;
 
     @Inject
     @RequestParameterMap
@@ -48,8 +53,13 @@ public class ProcessBean {
         currentUser = (User) session.getAttribute("user");
 
         if (querystring.containsKey("id")) {
-            Long id = Long.parseLong(querystring.get("id"));
-            process = dao.find(id, Process.class);
+            processId = Long.parseLong(querystring.get("id"));
+            process = dao.find(processId, Process.class);
+            if (process != null) {
+                String hql = "SELECT DISTINCT ph FROM ProcessPhase ph JOIN ph.process pr WHERE pr.id = :id";
+                List<ProcessPhase> phasesList = dao.createQuery(hql).setLong("id", processId).list();
+                processPhases = new ListDataModel<>(phasesList);
+            }
         }
     }
 
@@ -86,6 +96,22 @@ public class ProcessBean {
         return "/processo/index?faces-redirect=true&id=" + process.getId();
     }
 
+    public String viewPhaseForm() {
+        return viewPhaseForm(null);
+    }
+
+    public String viewPhaseForm(Long phaseId) {
+        if (phaseId != null) {
+            phase = dao.find(phaseId, ProcessPhase.class);
+        }
+        return "/processo/index?faces-redirect=true&id=" + processId;
+    }
+
+    public String createPhase() {
+        // TODO: implement method
+        return null;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -110,12 +136,31 @@ public class ProcessBean {
         promotedCpf = cpf;
     }
 
+    public Long getProcessId() {
+        return processId;
+    }
+
+    public void setProcessId(Long id) {
+        processId = id;
+    }
+
     public Process getProcess() {
         return process;
     }
 
-    public void setProcess(Process process) {
-        this.process = process;
+    public ProcessPhase getPhase() {
+        if (phase == null) {
+            phase = new ProcessPhase();
+        }
+        return phase;
+    }
+
+    public ListDataModel<ProcessPhase> getProcessPhases() {
+        return processPhases;
+    }
+
+    public boolean isPhaseFormVisible() {
+        return phase != null;
     }
 
     public Map<String, String> getClients() {

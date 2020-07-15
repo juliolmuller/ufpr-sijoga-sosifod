@@ -9,17 +9,6 @@
         xmlns:p="http://primefaces.org/ui"
         xmlns:my="http://lacussoft.com/sijoga/tags">
 
-    <ui:define name="header">
-        <div class="d-flex justify-content-between">
-            <div class="user-welcome">
-                Bem vindo, <h:outputText value="#{sessionScope.user.name}" />
-            </div>
-            <h:form prependId="false">
-                <h:commandButton id="btn-logout" value="Logout" action="#{loginBean.logout()}" />
-            </h:form>
-        </div>
-    </ui:define>
-
     <ui:define name="content">
         <div class="container">
             <h:panelGroup id="alerts" layout="block">

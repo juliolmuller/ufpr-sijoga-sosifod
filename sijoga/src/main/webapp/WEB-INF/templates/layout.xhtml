@@ -32,6 +32,14 @@
 
         <header class="header">
             <h:graphicImage styleClass="header-logo" name="img/logo.png" alt="Logo do sistema" />
+            <h:panelGroup styleClass="d-flex justify-content-between" rendered="#{sessionScope.user != null}">
+                <div class="user-welcome">
+                    Bem vindo, <h:outputText value="#{sessionScope.user.name}" />
+                </div>
+                <h:form prependId="false">
+                    <h:commandButton id="btn-logout" value="Logout" action="#{loginBean.logout()}" />
+                </h:form>
+            </h:panelGroup>
             <ui:insert name="header" />
         </header>
 

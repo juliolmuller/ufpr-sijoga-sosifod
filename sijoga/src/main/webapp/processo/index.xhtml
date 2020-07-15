@@ -21,100 +21,177 @@
                         Processo não encontrado.
                     </div>
                 </div>
+                <div class="row">
+                    <h:link value="Voltar" outcome="/index" styleClass="btn btn-light m-3" />
+                </div>
             </h:panelGroup>
 
             <h:panelGroup rendered="#{processBean.process != null}">
-                <h:form id="process-form" prependId="false">
-                    <h2>Processo ##{processBean.process.id}</h2>
-                    <h:inputHidden value="#{processBean.processId}" />
-                    <div class="row">
-                        <div class="mb-3 p-1">
-                            <h4>Descrição:</h4>
-                            #{processBean.process.description}
-                        </div>
+                <h2>Processo ##{processBean.process.id}</h2>
+                <div class="row">
+                    <div class="mb-3 p-1">
+                        <h4>Descrição:</h4>
+                        #{processBean.process.description}
                     </div>
-                    <div class="row">
-                        <div class="col-12 col-md-3 font-weight-bold">
-                            Juíz do caso:
-                        </div>
-                        <div class="col-12 col-md-9">
-                            #{processBean.process.judge.name}
-                            (ID ##{processBean.process.judge.id})
-                        </div>
-                        <div class="col-12 col-md-3 font-weight-bold">
-                            Parte promovente:
-                        </div>
-                        <div class="col-12 col-md-9">
-                            #{processBean.process.promoter.name}
-                            (CPF #{processBean.process.promoter.cpf})
-                        </div>
-                        <div class="col-12 col-md-3 font-weight-bold">
-                            Advogado de acusação:
-                        </div>
-                        <div class="col-12 col-md-9">
-                            #{processBean.process.promoter.lawyer.name}
-                            (OAB ##{processBean.process.promoter.lawyer.oab})
-                        </div>
-                        <div class="col-12 col-md-3 font-weight-bold">
-                            Parte promovida:
-                        </div>
-                        <div class="col-12 col-md-9">
-                            #{processBean.process.promoted.name}
-                            (CPF #{processBean.process.promoted.cpf})
-                        </div>
-                        <div class="col-12 col-md-3 font-weight-bold">
-                            Advogado de defesa
-                        </div>
-                        <div class="col-12 col-md-9">
-                            #{processBean.process.promoted.lawyer.name}
-                            (OAB ##{processBean.process.promoted.lawyer.oab})
-                        </div>
+                </div>
+                <div class="row mb-4">
+                    <div class="col-12 col-md-3 font-weight-bold">
+                        Juíz do caso:
                     </div>
-                    <h:panelGroup layout="block" rendered="#{not processBean.phaseFormVisible}">
-                        <div class="row justify-content-end my-2">
-                            <h:commandButton value="+ Nova Fase}" action="#{processBean.viewPhaseForm()}" />
-                        </div>
-                        <style>
-                            thead th {
-                                color: #fff;
-                                background-color: #343a40;
-                                border-color: #454d55;
-                            }
-                            tr td:last-child {
-                                width: 152px;
-                            }
-                        </style>
-                        <h:dataTable value="#{processBean.processPhases}" var="p" rendered="#{processBean.processPhases.rowCount > 0}" styleClass="table table-hover">
-                            <h:column>
-                                <f:facet name="header">Título</f:facet>
-                                <h:outputText value="#{p.title}" />
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">Status</f:facet>
-                                <h:outputText value="#{p.response.status.toString().toUpperCase()}" rendered="#{p.response != null}" />
-                                <h:outputText value="EM ANÁLISE" rendered="#{p.response == null}" />
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">Criado em</f:facet>
-                                <h:outputText value="#{p.createdAt}">
-                                    <f:convertDateTime locale="pt-BR" pattern="dd-MMM-yyyy hh:mm" />
-                                </h:outputText>
-                            </h:column>
-                            <h:column>
-                                <h:commandLink value="Detalhes" action="#{processBean.viewPhaseForm(p.id)}" />
-                            </h:column>
-                        </h:dataTable>
+                    <div class="col-12 col-md-9">
+                        #{processBean.process.judge.name}
+                        (ID ##{processBean.process.judge.id})
+                    </div>
+                    <div class="col-12 col-md-3 font-weight-bold">
+                        Parte promovente:
+                    </div>
+                    <div class="col-12 col-md-9">
+                        #{processBean.process.promoter.name}
+                        (CPF #{processBean.process.promoter.cpf})
+                    </div>
+                    <div class="col-12 col-md-3 font-weight-bold">
+                        Advogado de acusação:
+                    </div>
+                    <div class="col-12 col-md-9">
+                        #{processBean.process.promoter.lawyer.name}
+                        (OAB ##{processBean.process.promoter.lawyer.oab})
+                    </div>
+                    <div class="col-12 col-md-3 font-weight-bold">
+                        Parte promovida:
+                    </div>
+                    <div class="col-12 col-md-9">
+                        #{processBean.process.promoted.name}
+                        (CPF #{processBean.process.promoted.cpf})
+                    </div>
+                    <div class="col-12 col-md-3 font-weight-bold">
+                        Advogado de defesa
+                    </div>
+                    <div class="col-12 col-md-9">
+                        #{processBean.process.promoted.lawyer.name}
+                        (OAB ##{processBean.process.promoted.lawyer.oab})
+                    </div>
+                </div>
+
+                <h:form id="phasesList" prependId="false" style="display: #{processBean.phasesListVisible ? 'block' : 'none'}">
+                    <h:panelGroup layout="block" class="row justify-content-end" rendered="#{sessionScope.user.role == 'Advogado'}">
+                        <h:commandButton value="+ Nova Fase" action="#{processBean.viewPhaseForm()}" styleClass="mx-3 btn btn-dark">
+                            <f:param name="id" value="#{param['id']}" />
+                            <f:ajax execute="@this" render="phasesList phaseForm" />
+                        </h:commandButton>
                     </h:panelGroup>
-                    <h:panelGroup layout="block" rendered="#{processBean.phaseFormVisible}">
-                        <h3>Faze de Processo ##{processBean.phase.id}</h3>
-                        <h4><h:outputText value="#{processBean.phase.title}" /></h4>
-                        <p><h:outputText value="#{processBean.phase.description}" /></p>
-                        <h:link value="Fechar" outcome="index?id=#{processBean.process.id}" />
+                    <style>
+                        thead th {
+                            color: #fff;
+                            background-color: #343a40;
+                            border-color: #454d55;
+                        }
+                        tr td:last-child {
+                            width: 152px;
+                        }
+                    </style>
+                    <h:dataTable value="#{processBean.processPhases}" var="p" rendered="#{processBean.processPhases.rowCount > 0}" styleClass="mt-3 table table-hover">
+                        <h:column>
+                            <f:facet name="header">Título</f:facet>
+                            <h:outputText value="#{p.title}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Status</f:facet>
+                            <h:outputText value="#{p.response.status.toString().toUpperCase()}" rendered="#{p.response != null}" />
+                            <h:outputText value="EM ANÁLISE" rendered="#{p.response == null}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Criado em</f:facet>
+                            <h:outputText value="#{p.createdAt}">
+                                <f:convertDateTime locale="pt-BR" pattern="dd-MMM-yyyy hh:mm" />
+                            </h:outputText>
+                        </h:column>
+                        <h:column>
+                            <h:commandLink value="Detalhes" action="#{processBean.viewPhaseForm(p.id)}">
+                                <f:param name="id" value="#{param['id']}" />
+                                <f:ajax execute="@this" render="phasesList phaseDetails" />
+                            </h:commandLink>
+                        </h:column>
+                    </h:dataTable>
+                    <div class="row">
+                        <h:link value="Voltar" outcome="/index" styleClass="btn btn-light m-3" />
+                    </div>
+                </h:form>
+
+                <h:form id="phaseForm" prependId="false" style="display: #{processBean.phasesListVisible ? 'none' : 'block'}">
+                    <hr />
+                    <h4 class="my-3">Nova Fase de Processo</h4>
+                    <div class="form-group row">
+                        <h:outputLabel for="phaseTitle" value="Título:" styleClass="col-12 col-md-2 col-form-label mandatory-field" />
+                        <div class="col-12 col-md-10">
+                            <h:inputText id="phaseTitle" label="TÍTULO" value="#{processBean.phase.title}" styleClass="form-control">
+                                <f:validateRequired />
+                                <f:validateLength maximum="80" />
+                            </h:inputText>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <h:outputLabel for="phaseDesc" value="Descrição:" styleClass="col-12 col-md-2 col-form-label mandatory-field" />
+                        <div class="col-12 col-md-10">
+                            <h:inputTextarea id="phaseDesc" rows="3" label="DESCRIÇÃO" value="#{processBean.phase.description}" styleClass="form-control">
+                                <f:validateLength maximum="255" />
+                            </h:inputTextarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <h:outputLabel for="phaseAttach" value="Anexo:" styleClass="col-12 col-md-2 col-form-label mandatory-field" />
+                        <div class="col-12 col-md-10">
+                            <h:inputFile id="phaseAttach" label="ANEXO" value="#{processBean.phase.attachments}" styleClass="form-control-file">
+                                <f:validateRequired />
+                            </h:inputFile>
+                        </div>
+                    </div>
+                    <div class="row justify-content-end">
+                        <h:link value="Cancelar" outcome="index" styleClass="mr-3 btn btn-link">
+                            <f:param name="id" value="#{param['id']}" />
+                        </h:link>
+                        <h:commandButton value="Criar" action="#{processBean.createPhase()}" styleClass="mr-3 btn btn-dark">
+                            <f:param name="id" value="#{param['id']}" />
+                            <f:ajax execute="@form" render="phasesList phaseForm alerts" />
+                        </h:commandButton>
+                    </div>
+                </h:form>
+
+                <h:form id="phaseDetails" prependId="false" style="display: #{processBean.phasesListVisible ? 'none' : 'block'}">
+                    <hr />
+                    <div class="mt-3 mb-4 d-flex justify-content-between">
+                        <h4 class="d-inline"><h:outputText value="#{processBean.phase.title}" /></h4>
+                        <div class="d-flex">
+                            <span class="h5">Fase de Processo nº #{processBean.phase.id}</span>
+                            <h:link value="Fechar" outcome="index" styleClass="btn btn-sm btn-link">
+                                <f:param name="id" value="#{param['id']}" />
+                            </h:link>
+                        </div>
+                    </div>
+                    <p><h:outputText value="#{processBean.phase.description}" /></p>
+                    <div styleClass="mt-4">
+                        <h6>Anexos:</h6>
+                        <ui:repeat value="#{processBean.phaseAttachments}" var="a">
+                            <div class="row">
+                                <div class="col-6 col-md-3 font-weight-bold">
+                                    <h:commandLink value="#{a.fileName.split('\\.')[0]}" />
+                                </div>
+                                <div class="col-6 col-md-3 text-center">
+                                    Tipo: <h:outputText value="#{a.fileName.split('\\.')[1].toUpperCase()}" styleClass="font-weight-bold" />
+                                </div>
+                                <div class="col-12 col-md-6 text-right">
+                                    Enviado por <h:outputText value="#{a.uploadedBy.name}" styleClass="font-italic" />
+                                    em <h:outputText value="#{a.uploadedAt}" styleClass="font-italic">
+                                        <f:convertDateTime locale="pt-BR" pattern="dd-MMM-yyyy" />
+                                    </h:outputText>
+                                </div>
+                            </div>
+                        </ui:repeat>
+                    </div>
+                    <h:panelGroup layout="block" styleClass="mt-4" rendered="#{sessionScope.user.role == 'Juiz'}">
+                        <h6>Resposta:</h6>
                     </h:panelGroup>
                 </h:form>
             </h:panelGroup>
-
-            <h:link value="Voltar" outcome="/index" />
         </div>
     </ui:define>
 

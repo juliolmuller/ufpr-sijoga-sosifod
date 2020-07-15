@@ -3,10 +3,13 @@ package com.lacussoft.sijoga.bean;
 import com.lacussoft.sijoga.model.Parte;
 import com.lacussoft.sijoga.model.Process;
 import com.lacussoft.sijoga.model.ProcessPhase;
+import com.lacussoft.sijoga.model.ProcessPhaseAttachment;
 import com.lacussoft.sijoga.model.User;
 import com.lacussoft.sijoga.services.DaoFacade;
 import com.lacussoft.utils.Converter;
+import java.io.Serializable;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
@@ -23,16 +26,15 @@ import javax.servlet.http.HttpSession;
 
 @Named
 @RequestScoped
-public class ProcessBean {
+public class ProcessBean implements Serializable {
 
     private String description;
     private String promoterCpf;
     private String promotedCpf;
     private User currentUser;
-    private Long processId;
     private Process process;
-    private ProcessPhase phase;
-    private ListDataModel<ProcessPhase> processPhases;
+    private ProcessPhase phase = new ProcessPhase();
+    private boolean phasesListVisible = true;
 
     @Inject
     @RequestParameterMap
@@ -53,13 +55,8 @@ public class ProcessBean {
         currentUser = (User) session.getAttribute("user");
 
         if (querystring.containsKey("id")) {
-            processId = Long.parseLong(querystring.get("id"));
+            long processId = Long.parseLong(querystring.get("id"));
             process = dao.find(processId, Process.class);
-            if (process != null) {
-                String hql = "SELECT DISTINCT ph FROM ProcessPhase ph JOIN ph.process pr WHERE pr.id = :id";
-                List<ProcessPhase> phasesList = dao.createQuery(hql).setLong("id", processId).list();
-                processPhases = new ListDataModel<>(phasesList);
-            }
         }
     }
 
@@ -96,15 +93,14 @@ public class ProcessBean {
         return "/processo/index?faces-redirect=true&id=" + process.getId();
     }
 
-    public String viewPhaseForm() {
-        return viewPhaseForm(null);
+    public void viewPhaseForm() {
+        phase = new ProcessPhase();
+        phasesListVisible = false;
     }
 
-    public String viewPhaseForm(Long phaseId) {
-        if (phaseId != null) {
-            phase = dao.find(phaseId, ProcessPhase.class);
-        }
-        return "/processo/index?faces-redirect=true&id=" + processId;
+    public void viewPhaseForm(Long phaseId) {
+        phase = dao.find(phaseId, ProcessPhase.class);
+        phasesListVisible = false;
     }
 
     public String createPhase() {
@@ -136,12 +132,8 @@ public class ProcessBean {
         promotedCpf = cpf;
     }
 
-    public Long getProcessId() {
-        return processId;
-    }
-
-    public void setProcessId(Long id) {
-        processId = id;
+    public boolean isPhasesListVisible() {
+        return phasesListVisible;
     }
 
     public Process getProcess() {
@@ -149,18 +141,24 @@ public class ProcessBean {
     }
 
     public ProcessPhase getPhase() {
-        if (phase == null) {
-            phase = new ProcessPhase();
-        }
         return phase;
     }
 
     public ListDataModel<ProcessPhase> getProcessPhases() {
-        return processPhases;
+        if (process != null) {
+            String hql = "SELECT DISTINCT ph FROM ProcessPhase ph JOIN ph.process pr WHERE pr.id = :id";
+            List<ProcessPhase> phasesList = dao.createQuery(hql).setLong("id", process.getId()).list();
+            return new ListDataModel<>(phasesList);
+        }
+        return null;
     }
 
-    public boolean isPhaseFormVisible() {
-        return phase != null;
+    public List<ProcessPhaseAttachment> getPhaseAttachments() {
+        if (phase.getId() != null) {
+            String hql = "SELECT DISTINCT pa FROM ProcessPhaseAttachment pa JOIN pa.processPhase ph WHERE ph.id = :id";
+            return dao.createQuery(hql).setLong("id", phase.getId()).list();
+        }
+        return new LinkedList<>();
     }
 
     public Map<String, String> getClients() {

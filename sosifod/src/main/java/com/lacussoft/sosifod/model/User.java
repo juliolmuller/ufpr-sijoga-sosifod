@@ -1,10 +1,8 @@
 package com.lacussoft.sosifod.model;
 
+import com.lacussoft.utils.SecurityUtil;
 import java.io.Serializable;
 import javax.persistence.Column;
-//import javax.persistence.DiscriminatorColumn;
-//import javax.persistence.Inheritance;
-//import javax.persistence.InheritanceType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -12,60 +10,95 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "tb_usuarios")
-//@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-//@DiscriminatorColumn(name = "user_class")
 public class User implements Serializable {
+
+    private static final String HASH_PREFIX = "@SOSIFOD::";
     
     @Id
     @GeneratedValue
     private Long id;
     
-    @Column(nullable = false)
+    @Column(nullable = false, length = 11)
+    private String cpf;
+    
+    @Column(nullable = false, length = 100)
     private String name;
+    
+    @Column(nullable = false, length = 100)
+    private String email;
     
     @Column(nullable = false)
     private String password;
     
     @Column(nullable = false)
-    private String role;
+    private boolean isAdmin;
     
     public User() {}
 
-    public User(String name, String password, String role) {
-        this.name = name;
+    public User(String cpf, String name, String email, String password, boolean isAdmin) {
         this.password = password;
-        this.role = role;
+        this.isAdmin = isAdmin;
+        this.name = name;
+        this.email = email;
+        this.cpf = cpf;
+    }
+
+    public static String hashPassword(String plainPassword) {
+        if (plainPassword.startsWith(HASH_PREFIX)) {
+            return plainPassword;
+        }
+        return HASH_PREFIX + SecurityUtil.encryptPassword(plainPassword);
+    }
+
+    public void hashPassword() {
+        password = hashPassword(password);
     }
 
     public Long getId() {
         return this.id;
     }
 
-    private void setId(Long id) {
-        this.id = id;
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
     public String getName() {
-        return this.name;
+        return name;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getPassword() {
-        return this.password;
+        if (!password.startsWith(HASH_PREFIX)) {
+            int hashLength = HASH_PREFIX.length();
+            return password.substring(hashLength);
+        }
+        return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public String getRole() {
-        return this.role;
+    public boolean isIsAdmin() {
+        return isAdmin;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setIsAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
     }
 }

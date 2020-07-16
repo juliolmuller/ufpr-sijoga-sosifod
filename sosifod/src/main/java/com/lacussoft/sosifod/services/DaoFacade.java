@@ -36,6 +36,16 @@ public class DaoFacade implements Serializable {
         session.getTransaction().commit();
     }
 
+    public <T extends Serializable> T find(Serializable id, Class<T> clazz) {
+        return (T) session.get(clazz, id);
+    }
+
+    public void destroy(Serializable model) {
+        session.beginTransaction();
+        session.delete(model);
+        session.getTransaction().commit();
+    }
+
     public Query createQuery(String hql) {
         return session.createQuery(hql);
     }

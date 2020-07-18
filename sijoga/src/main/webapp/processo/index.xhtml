@@ -173,7 +173,7 @@
                         <ui:repeat value="#{processBean.phaseAttachments}" var="a">
                             <div class="row">
                                 <div class="col-6 col-md-3 font-weight-bold">
-                                    <h:commandLink value="#{a.fileName.split('\\.')[0]}" />
+                                    <a href="../resources/storage/#{a.fileName}" target="_blank">#{a.fileName.split('\\.')[0]}</a>
                                 </div>
                                 <div class="col-6 col-md-3 text-center">
                                     Tipo: <h:outputText value="#{a.fileName.split('\\.')[1].toUpperCase()}" styleClass="font-weight-bold" />

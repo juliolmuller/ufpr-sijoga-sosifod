@@ -195,7 +195,7 @@ public class DatabaseSeeder extends HttpServlet {
     }
 
     private ProcessPhaseAttachment makeProcessPhaseAttachment(ProcessPhase phase) {
-        String storagePath = getServletContext().getRealPath("/WEB-INF/storage");
+        String storagePath = getServletContext().getRealPath("/resources/storage");
         String fileName = phase.getProcess().getId() + "_" + phase.getId() + "_processo.pdf";
         File template = new File(storagePath, "processo.pdf");
         File process = new File(storagePath, fileName);

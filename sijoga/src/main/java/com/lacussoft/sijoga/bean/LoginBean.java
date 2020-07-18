@@ -33,6 +33,7 @@ public class LoginBean implements Serializable {
 
     public String logout() {
         auth.logout();
+        externalContext.invalidateSession();
         return "index?faces-redirect=true";
     }
 

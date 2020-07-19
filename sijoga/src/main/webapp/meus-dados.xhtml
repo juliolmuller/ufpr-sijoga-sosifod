@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<ui:composition template="WEB-INF/templates/layout.xhtml"
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:my="http://lacussoft.com/sijoga/tags">
+
+    <ui:define name="content">
+        <div class="container">
+            <h:panelGroup id="alerts" layout="block">
+                <my:toasts messages="#{facesContext.messageList}" />
+            </h:panelGroup>
+
+            <div id="signup-form">
+                <h2 class="py-3 text-center">Meus Dados</h2>
+                <h:form prependId="false">
+                    <h3>Dados Pessoais</h3>
+                    <div class="row">
+                        <div class="col-12 col-md-6 col-lg-4 form-group">
+                            <h:outputLabel for="cpf" value="CPF:" /><br/>
+                            <h:inputText id="cpf" readonly="true" label="CPF" value="#{userData.currentUser.cpf}" styleClass="form-control-plaintext mask-cpf" />
+                        </div>
+                        <h:panelGroup layout="block" styleClass="col-12 col-md-6 col-lg-4 form-group" rendered="#{sessionScope.user.role == 'Advogado'}">
+                            <h:outputLabel for="oab" value="OAB:" /><br/>
+                            <h:inputText id="oab" readonly="true" label="OAB" value="#{userData.currentUser.oab}" styleClass="form-control-plaintext mask-int" />
+                        </h:panelGroup>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-6 col-lg-4 form-group">
+                            <h:outputLabel for="name" value="Nome completo:" /><br/>
+                            <h:inputText id="name" label="NOME" value="#{userData.currentUser.name}" styleClass="form-control">
+                                <f:validateRequired />
+                                <f:validateLength maximum="120" />
+                            </h:inputText>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4 form-group">
+                            <h:outputLabel for="dateOfBirth" value="Data de nascimento:" /><br/>
+                            <h:inputText id="dateOfBirth" label="DATA DE NASCIMENTO" value="#{userData.currentUser.dateOfBirth}" styleClass="form-control mask-date datepicker">
+                                <f:validateRequired />
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                                <f:validator validatorId="majority" />
+                            </h:inputText>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4 form-group">
+                            <h:outputLabel for="email" value="Email:" /><br/>
+                            <h:inputText id="email" label="EMAIL" value="#{userData.currentUser.email}" styleClass="form-control">
+                                <f:validateRequired />
+                                <f:validateLength maximum="200" />
+                                <f:validator validatorId="email" />
+                            </h:inputText>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-6 col-lg-4 form-group">
+                            <h:outputLabel for="zipCode" value="CEP:" /><br/>
+                            <h:inputText id="zipCode" label="CEP" value="#{userData.currentUser.address.zipCode}" styleClass="form-control mask-cep">
+                                <f:validateRequired />
+                                <f:converter converterId="numbersOnly" />
+                                <f:validator validatorId="cep" />
+                            </h:inputText>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4 form-group">
+                            <h:outputLabel for="street" value="Logradouro:" /><br/>
+                            <h:inputText id="street" label="LOGRADOURO" value="#{userData.currentUser.address.street}" styleClass="form-control zip-code-street">
+                                <f:validateRequired />
+                                <f:validateLength maximum="100" />
+                            </h:inputText>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4 form-group">
+                            <h:outputLabel for="number" value="Número:" /><br/>
+                            <h:inputText id="number" label="NÚMERO" value="#{userData.currentUser.address.number}" styleClass="form-control mask-int zip-code-number">
+                                <f:validateRequired />
+                                <f:converter converterId="numbersOnly" />
+                                <f:validateLongRange minimum="0" maximum="999999" />
+                            </h:inputText>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4 form-group">
+                            <h:outputLabel for="complement" value="Complemento:" /><br/>
+                            <h:inputText id="complement" label="COMPLEMENTO" value="#{userData.currentUser.address.complement}" styleClass="form-control zip-code-complement">
+                                <f:validateLength maximum="30" />
+                            </h:inputText>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4 form-group">
+                            <h:outputLabel for="state" value="Estado:" /><br/>
+                            <h:selectOneMenu id="state" label="ESTADO" value="#{userData.currentUser.address.state}" styleClass="form-control zip-code-state">
+                                <f:validateRequired />
+                                <f:selectItem itemValue="" itemLabel="" noSelectionOption="true" />
+                                <f:selectItem itemValue="AC" itemLabel="Acre" />
+                                <f:selectItem itemValue="AL" itemLabel="Alagoas" />
+                                <f:selectItem itemValue="AP" itemLabel="Amapá" />
+                                <f:selectItem itemValue="AM" itemLabel="Amazonas" />
+                                <f:selectItem itemValue="BA" itemLabel="Bahia" />
+                                <f:selectItem itemValue="CE" itemLabel="Ceará" />
+                                <f:selectItem itemValue="DF" itemLabel="Distrito Federal" />
+                                <f:selectItem itemValue="ES" itemLabel="Espírito Santo" />
+                                <f:selectItem itemValue="GO" itemLabel="Goiás" />
+                                <f:selectItem itemValue="MA" itemLabel="Maranhão" />
+                                <f:selectItem itemValue="MT" itemLabel="Mato Grosso" />
+                                <f:selectItem itemValue="MS" itemLabel="Mato Grosso do Sul" />
+                                <f:selectItem itemValue="MG" itemLabel="Minas Gerais" />
+                                <f:selectItem itemValue="PA" itemLabel="Pará" />
+                                <f:selectItem itemValue="PB" itemLabel="Paraíba" />
+                                <f:selectItem itemValue="PR" itemLabel="Paraná" />
+                                <f:selectItem itemValue="PE" itemLabel="Pernambuco" />
+                                <f:selectItem itemValue="PI" itemLabel="Piauí" />
+                                <f:selectItem itemValue="RJ" itemLabel="Rio de Janeiro" />
+                                <f:selectItem itemValue="RN" itemLabel="Rio Grande do Norte" />
+                                <f:selectItem itemValue="RS" itemLabel="Rio Grande do Sul" />
+                                <f:selectItem itemValue="RO" itemLabel="Rondônia" />
+                                <f:selectItem itemValue="RR" itemLabel="Roraima" />
+                                <f:selectItem itemValue="SC" itemLabel="Santa Catarina" />
+                                <f:selectItem itemValue="SP" itemLabel="São Paulo" />
+                                <f:selectItem itemValue="SE" itemLabel="Sergipe" />
+                                <f:selectItem itemValue="TO" itemLabel="Tocantins" />
+                            </h:selectOneMenu>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4 form-group">
+                            <h:outputLabel for="city" value="Cidade:" /><br/>
+                            <h:inputText id="city" label="CIDADE" value="#{userData.currentUser.address.city}" styleClass="form-control zip-code-city">
+                                <f:validateRequired />
+                                <f:validateLength maximum="60" />
+                            </h:inputText>
+                        </div>
+                    </div>
+                    <div class="row justify-content-end mb-5">
+                        <h:commandButton value="Salvar" action="#{userData.updateData()}" styleClass="btn btn-dark"></h:commandButton>
+                    </div>
+                </h:form>
+                <h:form prependId="false">
+                    <h3>Senha de Acesso</h3>
+                    <div class="row">
+                        <div class="col-12 col-md-6 col-lg-4 form-group">
+                            <h:outputLabel for="oldPassword" value="Senha:" /><br/>
+                            <h:inputSecret id="oldPassword" label="SENHA" value="#{userData.currentPassword}" styleClass="form-control" validator="#{userData.validatePassword}">
+                                <f:validateRequired />
+                            </h:inputSecret>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4 form-group">
+                            <h:outputLabel for="newPassword1" value="Senha:" /><br/>
+                            <h:inputSecret id="newPassword1" label="SENHA" value="#{userData.newPassword1}" styleClass="form-control">
+                                <f:validateRequired />
+                                <f:validateLength minimum="8" maximum="100" />
+                            </h:inputSecret>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4 form-group">
+                            <h:outputLabel for="newPassword2" value="Confirmar senha:" /><br/>
+                            <h:inputSecret id="newPassword2" label="CONFIRMAÇÃO DE SENHA" value="#{userData.newPassword2}" styleClass="form-control">
+                                <f:validateRequired />
+                                <f:validator validatorId="repeatPassword" />
+                                <f:attribute name="target" value="newPassword1" />
+                            </h:inputSecret>
+                        </div>
+                    </div>
+                    <div class="row justify-content-end">
+                        <h:commandButton value="Salvar" action="#{userData.updatePassword()}" styleClass="btn btn-dark" />
+                    </div>
+                </h:form>
+            </div>
+        </div>
+    </ui:define>
+
+</ui:composition>

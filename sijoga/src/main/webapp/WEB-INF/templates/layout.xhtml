@@ -31,16 +31,27 @@
     <h:body>
 
         <header class="header">
-            <h:graphicImage styleClass="header-logo" name="img/logo.png" alt="Logo do sistema" />
-            <h:panelGroup styleClass="d-flex justify-content-between" rendered="#{sessionScope.user != null}">
-                <div class="user-welcome">
+            <h:panelGroup layout="block">
+                <h:graphicImage styleClass="header-logo" name="img/logo.png" alt="Logo do sistema" />
+            </h:panelGroup>
+            <h:panelGroup layout="block" rendered="#{sessionScope.user != null}" styleClass="flex-grow-1">
+                <span id="user-welcome">
                     Bem vindo, <h:outputText value="#{sessionScope.user.name}" />
-                </div>
-                <h:form prependId="false">
+                </span>
+                <h:form id="logout" prependId="false">
                     <h:commandButton id="btn-logout" value="Logout" action="#{loginBean.logout()}" />
                 </h:form>
+                <div class="navbar navbar-expand py-0" style="clear: left;">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <h:link styleClass="nav-link" value="Processos" outcome="/index" />
+                        </li>
+                        <li class="nav-item" style="#{sessionScope.user.role == 'Advogado' ? '' : 'display: none;'}">
+                            <h:link styleClass="nav-link" value="Cadastro de Partes" outcome="/cadastro" />
+                        </li>
+                    </ul>
+                </div>
             </h:panelGroup>
-            <ui:insert name="header" />
         </header>
 
         <main class="main">

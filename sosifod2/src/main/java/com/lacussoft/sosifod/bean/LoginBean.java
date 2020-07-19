@@ -32,6 +32,11 @@ public class LoginBean implements Serializable {
         return "login?error=true";
     }
 
+    public String logout() {
+        auth.logout();
+        return "index?faces-redirect=true";
+    }
+
     public String getCpf() {
         return cpf;
     }

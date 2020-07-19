@@ -8,18 +8,17 @@ import com.lacussoft.sijoga.model.ProcessPhaseResponse;
 import com.lacussoft.sijoga.model.ProcessPhaseResponseStatus;
 import com.lacussoft.sijoga.model.User;
 import com.lacussoft.sijoga.services.DaoFacade;
-import java.math.BigDecimal;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.json.Json;
-import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
-import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.json.JsonValue;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -31,6 +30,19 @@ public class SubpoenaResources {
 
     @EJB
     private DaoFacade dao;
+
+    @POST
+    @Path("/{phaseId}")
+    public Response update(SubpoenaResponseBean comment, @PathParam("phaseId") Long phaseId) {
+        ProcessPhase phase = dao.find(phaseId, ProcessPhase.class);
+        ProcessPhaseResponse response = phase.getResponse();
+        response.setStatus(ProcessPhaseResponseStatus.SUMMONED);
+        response.setDescription(comment.resposta);
+
+        dao.save(phase);
+
+        return Response.ok().build();
+    }
 
     @GET
     public Response index() {

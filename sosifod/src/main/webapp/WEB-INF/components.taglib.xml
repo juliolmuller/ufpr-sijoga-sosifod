@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<facelet-taglib version="2.1"
+        xmlns="http://java.sun.com/xml/ns/javaee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd">
+    <namespace>http://lacussoft.com/sijoga/tags</namespace>
+    <tag>
+        <tag-name>toast</tag-name>
+        <source>tags/toast.xhtml</source>
+    </tag>
+    <tag>
+        <tag-name>toasts</tag-name>
+        <source>tags/toasts.xhtml</source>
+    </tag>
+</facelet-taglib>

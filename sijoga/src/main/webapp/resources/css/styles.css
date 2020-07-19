@@ -15,12 +15,12 @@ body {
 }
 
 .header {
-    display: block;
+    display: flex;
     position: fixed;
     background-color: #e6e6fa;
     width: 100%;
     padding: 0px;
-    z-index: 2;
+    z-index: 99;
     top: 0px;
     overflow: hidden;
     -webkit-box-shadow: 0px -1px 30px 0px rgba(170, 170, 170, 0.43);
@@ -126,6 +126,7 @@ main.main {
     outline: 0;
 }
 
+
 #btn-report {
     border-radius: 5px;
     height: 35px;
@@ -165,12 +166,17 @@ main.main {
     outline: 0;
 }
 
-.user-welcome {
-    display: block;
+
+#user-welcome {
     float: left;
     padding-left: 30px;
     padding-top: 10px;
     font-size: 16px;
+}
+
+#logout {
+    display: inline;
+    float: right;
 }
 
 .process-card-deck {
@@ -321,4 +327,14 @@ main.main {
         margin-top: 5px;
         font-size: 10px;
     }
+}
+
+.nav-item {
+    margin-right: 18px;
+    margin-left: 8px;
+}
+
+#role td label {
+    padding-right: 24px;
+    padding-left: 8px;
 }

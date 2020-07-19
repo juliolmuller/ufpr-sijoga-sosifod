@@ -9,19 +9,6 @@
         xmlns:p="http://primefaces.org/ui"
         xmlns:my="http://lacussoft.com/sijoga/tags">
 
-    <ui:define name="header">
-        <div id="filtros">
-            <div id="div-filtro-situacao" style="display: inline-block;">
-                Situação:
-                <select class="filtro" id="filtro-situacao">
-                    <option>Todos</option>
-                    <option>Em aberto</option>
-                    <option>Encerrado</option>
-                </select>
-            </div>
-        </div>
-    </ui:define>
-
     <ui:define name="content">
         <h:panelGroup id="alerts" layout="block">
             <my:toasts messages="#{facesContext.messageList}" />

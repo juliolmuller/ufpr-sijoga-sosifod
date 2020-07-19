@@ -20,7 +20,7 @@ import javax.inject.Named;
 @RequestScoped
 public class UserFormBean implements Serializable {
 
-    private AccessRole role;
+    private AccessRole role = AccessRole.PARTE;
     private String cpf;
     private String name;
     private String email;
@@ -57,6 +57,9 @@ public class UserFormBean implements Serializable {
         context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, successMsg, successMsg));
         flash.setKeepMessages(true);
 
+        if (role.equals(AccessRole.PARTE)) {
+            return "index?faces-redirect=true";
+        }
         return "login?faces-redirect=true";
     }
 

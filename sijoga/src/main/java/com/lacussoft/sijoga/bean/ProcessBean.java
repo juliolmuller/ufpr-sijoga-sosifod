@@ -19,6 +19,7 @@ import javax.faces.annotation.RequestParameterMap;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.context.Flash;
 import javax.faces.model.ListDataModel;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -46,6 +47,9 @@ public class ProcessBean implements Serializable {
     @Inject
     private ExternalContext externalContext;
 
+    @Inject
+    private Flash flash;
+
     @EJB
     private DaoFacade dao;
 
@@ -66,22 +70,27 @@ public class ProcessBean implements Serializable {
                 String msg = "CPF do Promovente é requerido.";
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
             }
+
             if (promotedCpf == null) {
                 String msg = "CPF do Promovido é requerido.";
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
             }
+
             return null;
         }
+
         Parte promoter = getPromoter();
         Parte promoted = getPromoted();
         if (promoter == null || promoted == null) {
             return null;
         }
+
         if (promoter.getId().equals(promoted.getId())) {
             String msg = "Promovente e Promovido não podem ser a mesma pessoa.";
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
             return null;
         }
+
         Process process = new Process();
         process.setDescription(description);
         process.setPromoter(promoter);
@@ -89,8 +98,14 @@ public class ProcessBean implements Serializable {
         process.setCreatedBy(currentUser);
         process.setUpdatedBy(currentUser);
         process.setJudge(dao.getRandomJudge());
+
         dao.save(process);
-        return "/processo/index?faces-redirect=true&id=" + process.getId();
+
+        String successMsg = "Processo criado com sucesso.";
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, successMsg, successMsg));
+        flash.setKeepMessages(true);
+
+        return "index?faces-redirect=true&id=" + process.getId();
     }
 
     public void viewPhaseForm() {

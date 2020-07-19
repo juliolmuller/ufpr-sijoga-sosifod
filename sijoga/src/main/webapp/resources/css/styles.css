@@ -185,8 +185,12 @@ main.main {
 }
 
 .process-card {
-    margin-top: 1em;
-    margin-bottom: 1em;
+    padding-top: 1em;
+    border-top: dotted 0.5px black;
+}
+
+.process-card:first-child {
+    border-top: none;
 }
 
 #filtros {

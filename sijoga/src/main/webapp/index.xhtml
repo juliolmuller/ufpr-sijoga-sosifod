@@ -36,6 +36,28 @@
                 </ui:repeat>
             </div>
         </div>
+        <h:form prependId="false">
+            <h:commandButton id="btn-report" value="Gerar Relatório" action="#{reportBean.printReport(sessionScope.user.id,'Parte')}" rendered="#{sessionScope.user.role == 'Parte'}" />
+        </h:form>
+        
+        <h:form prependId="false">
+            <h:commandButton id="btn-repor-closed" value="Processos Encerrados" action="#{reportBean.printReport(sessionScope.user.id,'FechadosAd')}" rendered="#{sessionScope.user.role == 'Advogado'}" />
+        </h:form>
+        
+        <div class="process-card-deck">
+            <h:form rendered="#{sessionScope.user.role == 'Advogado'}">
+                <h:inputText id="data-inicio" label="DATA INICIO" value="#{reportBean.data1}" styleClass="mask-date datepicker">
+                    <f:validateRequired />
+                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                </h:inputText>
+                <h:inputText id="data-fim" label="DATA FIM" value="#{reportBean.data2}" styleClass="mask-date datepicker">
+                    <f:validateRequired />
+                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                </h:inputText>
+                <h:commandButton id="btn-report-open" value="Processos Abertos" action="#{reportBean.printReport(sessionScope.user.id,'AbertosAd')}"/>
+            </h:form>
+        </div>
+        
         <h:link styleClass="new-process-btn" value="+ Novo Processo" outcome="processo/novo" rendered="#{sessionScope.user.role == 'Advogado'}" />
     </ui:define>
 

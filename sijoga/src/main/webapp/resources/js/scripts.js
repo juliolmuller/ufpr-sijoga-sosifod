@@ -25,8 +25,8 @@ $(function () {
     $('.mask-int').mask('000.000');
 
     $('.datepicker').datepicker({
-        format: 'dd/mm/yyyy',
-        endDate: '-18y'
+        format: 'dd/mm/yyyy'//,
+        //endDate: '-18y'
     });
 
     $('[name="role"]').change(function() {

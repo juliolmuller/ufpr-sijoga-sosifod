@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:my="http://lacussoft.com/sijoga/tags">
+
+    <ui:define name="content">
+        <div class="container">
+            <h:panelGroup id="alerts" layout="block">
+                <my:toasts messages="#{facesContext.messageList}" />
+            </h:panelGroup>
+
+            <h:panelGroup rendered="#{intimacaoBean.intimacao == null}">
+                <div class="row">
+                    <div class="mb-3 p-1">
+                        Intimação não encontrada.
+                    </div>
+                </div>
+                <div class="row">
+                    <h:link value="Voltar" outcome="/index" styleClass="btn btn-light m-3" />
+                </div>
+            </h:panelGroup>
+
+            <h:panelGroup rendered="#{intimacaoBean.intimacao != null}">
+                <h2>Intimação ##{intimacaoBean.intimacao.id}</h2>
+                <div class="row">
+                    <div class="mb-3 p-2">
+                        <h4>Oficial de Justiça - #{intimacaoBean.intimacao.oficial.name}</h4>
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <div class="col-12 col-md-3 font-weight-bold">
+                        Processo nº:
+                    </div>
+                    <div class="col-12 col-md-9">
+                        #{intimacaoBean.intimacao.processo}
+                    </div>
+                    <div class="col-12 col-md-3 font-weight-bold">
+                        Data da intimação:
+                    </div>
+                    <div class="col-12 col-md-9">
+                        #{intimacaoBean.intimacao.data_intimacao}
+                    </div>
+                    <div class="col-12 col-md-3 font-weight-bold">
+                        CPF Intimado:
+                    </div>
+                    <div class="col-12 col-md-9">
+                        #{intimacaoBean.intimacao.cpf_intimado}
+                    </div>
+                    <div class="col-12 col-md-3 font-weight-bold">
+                        Endereço Intimado:
+                    </div>
+                    <div class="col-12 col-md-9">
+                        #{intimacaoBean.intimacao.endereco_intimado}
+                    </div>
+                    <div class="col-12 col-md-3 font-weight-bold">
+                        Estado
+                    </div>
+                    <div class="col-12 col-md-9">
+                        #{intimacaoBean.intimacao.estado}
+                    </div>
+                </div>
+            </h:panelGroup>
+            <h:panelGroup rendered="#{intimacaoBean.intimacao.estado == 'Executada'}"> 
+                <div class="row mb-4">
+                    <div class="col-12 col-md-3 font-weight-bold">
+                        Data da Execução
+                    </div>
+                    <div class="col-12 col-md-9">
+                        #{intimacaoBean.intimacao.data_execucao}
+                    </div>
+                </div>
+            </h:panelGroup>
+            <h:panelGroup rendered="#{intimacaoBean.intimacao.estado != 'Executada'}">
+                <h:form id="execucaoForm" prependId="false">
+                    <div class="form-group row">
+                        <h:outputLabel for="dataExecucao" value="Data da execução:" styleClass="col-12 col-md-2 col-form-label mandatory-field" />
+                        <div class="col-12 col-md-2">
+                            <h:inputText  id="dataExecucao" label="Data da execução" value="#{intimacaoBean.dataExecucao}" styleClass="mask-date datepicker">
+                                <f:validateRequired />
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:inputText>
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <h:commandButton value="Salvar" action="#{intimacaoBean.createIntimacao()}" styleClass="mr-3 btn btn-dark">
+                            <f:param name="id" value="#{param['id']}" />
+                            <f:ajax execute="@form" render="execucaoForm alerts" />
+                        </h:commandButton>
+                    </div>
+                </h:form>
+            </h:panelGroup>
+        </div>
+    </ui:define>
+
+</ui:composition>

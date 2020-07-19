@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<ui:composition template="WEB-INF/templates/layout.xhtml"
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:my="http://lacussoft.com/sijoga/tags">
+
+    <ui:define name="content">
+        <div class="container">
+            <h:panelGroup id="alerts" layout="block">
+                <my:toasts messages="#{facesContext.messageList}" />
+            </h:panelGroup>
+
+            <h:form id="signup-form" prependId="false">
+                <div class="row">
+                    <div class="mb-3 p-1">
+                        <h:outputLabel for="cpf" value="CPF:" /><br/>
+                        <h:inputText id="cpf" label="CPF" value="#{userForm.cpf}" styleClass="mask-cpf">
+                            <f:validateRequired />
+                            <f:converter converterId="numbersOnly" />
+                            <f:validator validatorId="cpf" />
+                            <f:validator binding="#{uniqueCpfValidator}" />
+                        </h:inputText>
+                    </div>
+                    <div class="mb-3 p-1">
+                        <h:outputLabel for="name" value="Nome completo:" /><br/>
+                        <h:inputText id="name" label="NOME" value="#{userForm.name}">
+                            <f:validateRequired />
+                            <f:validateLength maximum="120" />
+                        </h:inputText>
+                    </div>
+                    <div class="mb-3 p-1">
+                        <h:outputLabel for="email" value="Email:" /><br/>
+                        <h:inputText id="email" label="EMAIL" value="#{userForm.email}">
+                            <f:validateRequired />
+                            <f:validateLength maximum="200" />
+                            <f:validator validatorId="email" />
+                        </h:inputText>
+                    </div>
+                    <div class="mb-3 p-1">
+                        <h:outputLabel for="password1" value="Senha:" /><br/>
+                        <h:inputSecret id="password1" label="SENHA" value="#{userForm.password1}">
+                            <f:validateRequired />
+                            <f:validateLength minimum="8" maximum="100" />
+                        </h:inputSecret>
+                    </div>
+                    <div class="mb-3 p-1">
+                        <h:outputLabel for="password2" value="Confirmar senha:" /><br/>
+                        <h:inputSecret id="password2" label="CONFIRMAÇÃO DE SENHA" value="#{userForm.password2}">
+                            <f:validateRequired />
+                            <f:validator validatorId="repeatPassword" />
+                            <f:attribute name="target" value="password1" />
+                        </h:inputSecret>
+                    </div>
+                </div>
+                <h:commandButton value="Cadastrar" action="#{userForm.create()}" />
+            </h:form>
+        </div>
+    </ui:define>
+
+</ui:composition>

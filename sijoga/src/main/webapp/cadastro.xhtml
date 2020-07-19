@@ -16,8 +16,12 @@
             </h:panelGroup>
 
             <h:form id="signup-form" prependId="false">
-                <div class="row">
-                    <div class="mb-3 p-1">
+                <h2 class="py-3 text-center">
+                    <h:outputText value="Cadastro de Juiz ou Advogado" rendered="#{sessionScope.user == null}" />
+                    <h:outputText value="Cadastro de Nova Parte" rendered="#{sessionScope.user != null}" />
+                </h2>
+                <h:panelGroup layout="block" styleClass="row" rendered="#{sessionScope.user == null}">
+                    <div class="form-group form-check">
                         <h:outputLabel for="role" value="Perfil:" /><br/>
                         <h:selectOneRadio id="role" label="PERFIL" value="#{userForm.role}" binding="#{role}">
                             <f:validateRequired />
@@ -25,78 +29,78 @@
                             <f:selectItem itemLabel="Juiz" itemValue="JUIZ" />
                         </h:selectOneRadio>
                     </div>
-                    <h:panelGroup id="oabField" layout="block" styleClass="mb-3 p-1" style="display: #{role.value == 'ADVOGADO' ? 'block' : 'none'};">
+                    <h:panelGroup id="oabField" layout="block" styleClass="col-12 col-md-4 form-group ml-5" style="display: #{role.value == 'ADVOGADO' ? 'block' : 'none'};">
                         <h:outputLabel for="oab" value="Número da OAB:" /><br/>
-                        <h:inputText id="oab" label="OAB" value="#{userForm.oab}" styleClass="mask-int" required="#{role.value == 'ADVOGADO'}">
+                        <h:inputText id="oab" label="OAB" value="#{userForm.oab}" styleClass="form-control mask-int" required="#{role.value == 'ADVOGADO'}">
                             <f:converter converterId="numbersOnly" />
                         </h:inputText>
                     </h:panelGroup>
-                </div>
+                </h:panelGroup>
                 <div class="row">
-                    <div class="mb-3 p-1">
+                    <div class="col-12 col-md-6 col-lg-4 form-group">
                         <h:outputLabel for="cpf" value="CPF:" /><br/>
-                        <h:inputText id="cpf" label="CPF" value="#{userForm.cpf}" styleClass="mask-cpf">
+                        <h:inputText id="cpf" label="CPF" value="#{userForm.cpf}" styleClass="form-control mask-cpf">
                             <f:validateRequired />
                             <f:converter converterId="numbersOnly" />
                             <f:validator validatorId="cpf" />
                             <f:validator binding="#{uniqueCpfValidator}" />
                         </h:inputText>
                     </div>
-                    <div class="mb-3 p-1">
+                    <div class="col-12 col-md-6 col-lg-4 form-group">
                         <h:outputLabel for="name" value="Nome completo:" /><br/>
-                        <h:inputText id="name" label="NOME" value="#{userForm.name}">
+                        <h:inputText id="name" label="NOME" value="#{userForm.name}" styleClass="form-control">
                             <f:validateRequired />
                             <f:validateLength maximum="120" />
                         </h:inputText>
                     </div>
-                    <div class="mb-3 p-1">
+                    <div class="col-12 col-md-6 col-lg-4 form-group">
                         <h:outputLabel for="dateOfBirth" value="Data de nascimento:" /><br/>
-                        <h:inputText id="dateOfBirth" label="DATA DE NASCIMENTO" value="#{userForm.dateOfBirth}" styleClass="mask-date datepicker">
+                        <h:inputText id="dateOfBirth" label="DATA DE NASCIMENTO" value="#{userForm.dateOfBirth}" styleClass="form-control mask-date datepicker">
                             <f:validateRequired />
                             <f:convertDateTime pattern="dd/MM/yyyy" />
                             <f:validator validatorId="majority" />
                         </h:inputText>
                     </div>
-                    <div class="mb-3 p-1">
+                    <div class="col-12 col-md-6 col-lg-4 form-group">
                         <h:outputLabel for="email" value="Email:" /><br/>
-                        <h:inputText id="email" label="EMAIL" value="#{userForm.email}">
+                        <h:inputText id="email" label="EMAIL" value="#{userForm.email}" styleClass="form-control">
                             <f:validateRequired />
                             <f:validateLength maximum="200" />
                             <f:validator validatorId="email" />
                         </h:inputText>
                     </div>
-                    <div class="mb-3 p-1">
+                    <div class="col-12 col-md-6 col-lg-4 form-group">
                         <h:outputLabel for="zipCode" value="CEP:" /><br/>
-                        <h:inputText id="zipCode" label="CEP" value="#{userForm.address.zipCode}" styleClass="mask-cep">
+                        <h:inputText id="zipCode" label="CEP" value="#{userForm.address.zipCode}" styleClass="form-control mask-cep">
                             <f:validateRequired />
                             <f:converter converterId="numbersOnly" />
                             <f:validator validatorId="cep" />
                         </h:inputText>
                     </div>
-                    <div class="mb-3 p-1">
+                    <div class="col-12 col-md-6 col-lg-4 form-group">
                         <h:outputLabel for="street" value="Logradouro:" /><br/>
-                        <h:inputText id="street" label="LOGRADOURO" value="#{userForm.address.street}" styleClass="zip-code-street">
+                        <h:inputText id="street" label="LOGRADOURO" value="#{userForm.address.street}" styleClass="form-control zip-code-street">
                             <f:validateRequired />
                             <f:validateLength maximum="100" />
                         </h:inputText>
                     </div>
-                    <div class="mb-3 p-1">
+                    <div class="col-12 col-md-6 col-lg-4 form-group">
                         <h:outputLabel for="number" value="Número:" /><br/>
-                        <h:inputText id="number" label="NÚMERO" value="#{userForm.address.number}" styleClass="mask-int zip-code-number">
+                        <h:inputText id="number" label="NÚMERO" value="#{userForm.address.number}" styleClass="form-control mask-int zip-code-number">
                             <f:validateRequired />
                             <f:converter converterId="numbersOnly" />
                             <f:validateLongRange minimum="0" maximum="999999" />
                         </h:inputText>
                     </div>
-                    <div class="mb-3 p-1">
+                    <div class="col-12 col-md-6 col-lg-4 form-group">
                         <h:outputLabel for="complement" value="Complemento:" /><br/>
-                        <h:inputText id="complement" label="COMPLEMENTO" value="#{userForm.address.complement}" styleClass="zip-code-complement">
+                        <h:inputText id="complement" label="COMPLEMENTO" value="#{userForm.address.complement}" styleClass="form-control zip-code-complement">
                             <f:validateLength maximum="30" />
                         </h:inputText>
                     </div>
-                    <div class="mb-3 p-1">
+                    <div class="col-12 col-md-6 col-lg-4 form-group">
                         <h:outputLabel for="state" value="Estado:" /><br/>
-                        <h:selectOneMenu id="state" label="ESTADO" value="#{userForm.address.state}" styleClass="zip-code-state">
+                        <h:selectOneMenu id="state" label="ESTADO" value="#{userForm.address.state}" styleClass="form-control zip-code-state">
                             <f:validateRequired />
                             <f:selectItem itemValue="" itemLabel="" noSelectionOption="true" />
                             <f:selectItem itemValue="AC" itemLabel="Acre" />
@@ -128,30 +132,34 @@
                             <f:selectItem itemValue="TO" itemLabel="Tocantins" />
                         </h:selectOneMenu>
                     </div>
-                    <div class="mb-3 p-1">
+                    <div class="col-12 col-md-6 col-lg-4 form-group">
                         <h:outputLabel for="city" value="Cidade:" /><br/>
-                        <h:inputText id="city" label="CIDADE" value="#{userForm.address.city}" styleClass="zip-code-city">
+                        <h:inputText id="city" label="CIDADE" value="#{userForm.address.city}" styleClass="form-control zip-code-city">
                             <f:validateRequired />
                             <f:validateLength maximum="60" />
                         </h:inputText>
                     </div>
-                    <div class="mb-3 p-1">
+                    <div class="col-12 col-md-6 col-lg-4 form-group">
                         <h:outputLabel for="password1" value="Senha:" /><br/>
-                        <h:inputSecret id="password1" label="SENHA" value="#{userForm.password1}">
+                        <h:inputSecret id="password1" label="SENHA" value="#{userForm.password1}" styleClass="form-control">
                             <f:validateRequired />
                             <f:validateLength minimum="8" maximum="100" />
                         </h:inputSecret>
                     </div>
-                    <div class="mb-3 p-1">
+                    <div class="col-12 col-md-6 col-lg-4 form-group">
                         <h:outputLabel for="password2" value="Confirmar senha:" /><br/>
-                        <h:inputSecret id="password2" label="CONFIRMAÇÃO DE SENHA" value="#{userForm.password2}">
+                        <h:inputSecret id="password2" label="CONFIRMAÇÃO DE SENHA" value="#{userForm.password2}" styleClass="form-control">
                             <f:validateRequired />
                             <f:validator validatorId="repeatPassword" />
                             <f:attribute name="target" value="password1" />
                         </h:inputSecret>
                     </div>
                 </div>
-                <h:commandButton value="Cadastrar" action="#{userForm.create()}" />
+                <div class="d-flex justify-content-center mt-5">
+                    <h:link value="Já sou cadastrado" outcome="login" rendered="#{sessionScope.user == null}" styleClass="btn btn-lg btn-link" />
+                    <input type="reset" value="Limpar formulário" class="btn btn-lg btn-link mr-3" />
+                    <h:commandButton value="Cadastrar" action="#{userForm.create()}" styleClass="btn btn-lg btn-dark" />
+                </div>
             </h:form>
         </div>
     </ui:define>

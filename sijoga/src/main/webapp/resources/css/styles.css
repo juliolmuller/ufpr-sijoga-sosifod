@@ -292,3 +292,8 @@ main.main {
     margin-right: 18px;
     margin-left: 8px;
 }
+
+#role td label {
+    padding-right: 24px;
+    padding-left: 8px;
+}

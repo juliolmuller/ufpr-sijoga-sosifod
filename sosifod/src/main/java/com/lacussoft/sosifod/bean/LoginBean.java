@@ -27,7 +27,7 @@ public class LoginBean implements Serializable {
         AuthenticationStatus status = auth.attempt(cpf, password);
         try {
             if (status.equals(AuthenticationStatus.SUCCESS)) {
-                externalContext.redirect("/sosifod/index.html");
+                externalContext.redirect("/sosifod/index.xhtml");
             }
             externalContext.redirect("/sosifod/login.xhtml?error=true");
         } catch (IOException ex) {

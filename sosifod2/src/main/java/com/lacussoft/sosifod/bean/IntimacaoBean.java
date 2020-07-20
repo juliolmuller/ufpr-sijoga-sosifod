@@ -56,6 +56,7 @@ public class IntimacaoBean implements Serializable {
     }
 
     public String createIntimacao() {
+        System.out.print("Modificando intimação ...");
         if (dataExecucao == null) {
                 String msg = "Data da execução é requerida.";
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));

@@ -16,36 +16,45 @@
         <div class="processes">
             <div class="process-card-deck">
                 <ui:repeat var="process" value="#{indexBean.processes}">
-                    <div class="process-card d-flex justify-content-between">
-                        <span>#{process.id} (<b>Juiz:</b> #{process.judge.name} - <b>Promovente:</b> #{process.promoter.name} - <b>Promovido:</b> #{process.promoted.name})</span>
-                        <h:link value="Visualizar" outcome="processo/index?id=#{process.id}" />
+                    <div class="process-card">
+                        <div class="d-flex justify-content-between">
+                            <h5>Processo ##{process.id}</h5>
+                            <h:link value="Visualizar" outcome="processo/index?id=#{process.id}" />
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <span><b>Juiz:</b> #{process.judge.name}</span>
+                            <span><b>Promovente:</b> #{process.promoter.name}</span>
+                            <span><b>Promovido:</b> #{process.promoted.name}</span>
+                        </div>
+                        <p class="mt-2 text-justify"><h:outputText value="#{process.description}" /></p>
                     </div>
                 </ui:repeat>
             </div>
         </div>
-        <h:form prependId="false">
-            <h:commandButton id="btn-report" value="Gerar Relatório" action="#{reportBean.printReport(sessionScope.user.id,'Parte')}" rendered="#{sessionScope.user.role == 'Parte'}" />
-        </h:form>
-        
-        <h:form prependId="false">
-            <h:commandButton id="btn-repor-closed" value="Processos Encerrados" action="#{reportBean.printReport(sessionScope.user.id,'FechadosAd')}" rendered="#{sessionScope.user.role == 'Advogado'}" />
-        </h:form>
-        
-        <div class="process-card-deck">
-            <h:form rendered="#{sessionScope.user.role == 'Advogado'}">
-                <h:inputText id="data-inicio" label="DATA INICIO" value="#{reportBean.data1}" styleClass="mask-date datepicker">
-                    <f:validateRequired />
-                    <f:convertDateTime pattern="dd/MM/yyyy" />
-                </h:inputText>
-                <h:inputText id="data-fim" label="DATA FIM" value="#{reportBean.data2}" styleClass="mask-date datepicker">
-                    <f:validateRequired />
-                    <f:convertDateTime pattern="dd/MM/yyyy" />
-                </h:inputText>
-                <h:commandButton id="btn-report-open" value="Processos Abertos" action="#{reportBean.printReport(sessionScope.user.id,'AbertosAd')}"/>
+
+        <h:panelGroup layout="block" styleClass="processes" style="margin-top: -10px; margin-bottom: 64px;">
+            <h4 class="py-3">Relatórios - Insira o intervalo de datas para relatórios em aberto</h4>
+            <h:form prependId="false" styleClass="d-flex justify-content-between">
+
+                <h:commandButton id="btn-report" value="Gerar Relatório" action="#{reportBean.printReport(sessionScope.user.id,'Parte')}" rendered="#{sessionScope.user.role == 'Parte'}" />
+
+                <h:commandButton id="btn-report-closed" value="Processos Encerrados" action="#{reportBean.printReport(sessionScope.user.id,'FechadosAd')}" rendered="#{sessionScope.user.role == 'Advogado'}" />
+
+                <h:panelGroup layout="block" rendered="#{sessionScope.user.role == 'Advogado'}">
+                    <h:commandButton id="btn-report-open" value="Processos Abertos" action="#{reportBean.printReport(sessionScope.user.id,'AbertosAd')}"/>
+                    <h:inputText id="data-inicio" label="DATA INICIO" value="#{reportBean.data1}" styleClass="mask-date datepicker">
+                        <f:validateRequired />
+                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                    </h:inputText>
+                    <h:inputText id="data-fim" label="DATA FIM" value="#{reportBean.data2}" styleClass="mask-date datepicker">
+                        <f:validateRequired />
+                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                    </h:inputText>
+                </h:panelGroup>
             </h:form>
-        </div>
-        
-        <h:link styleClass="new-process-btn" value="+ Novo Processo" outcome="processo/novo" rendered="#{sessionScope.user.role == 'Advogado'}" />
+        </h:panelGroup>
+
+        <h:button styleClass="new-process-btn" value="+ Novo Processo" outcome="processo/novo" rendered="#{sessionScope.user.role == 'Advogado'}" />
     </ui:define>
 
 </ui:composition>

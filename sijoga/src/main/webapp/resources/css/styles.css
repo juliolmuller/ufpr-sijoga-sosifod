@@ -148,7 +148,6 @@ main.main {
     color: white;
     text-decoration: none;
     margin-right: 15px;
-    margin-top: 17px;
     font-size: 14px;
     outline: 0;
 }
@@ -160,8 +159,8 @@ main.main {
     background-color: black;
     color: white;
     text-decoration: none;
+    margin-left: 15px;
     margin-right: 15px;
-    margin-top: 17px;
     font-size: 14px;
     outline: 0;
 }
@@ -185,8 +184,12 @@ main.main {
 }
 
 .process-card {
-    margin-top: 1em;
-    margin-bottom: 1em;
+    padding-top: 1em;
+    border-top: dotted 0.5px black;
+}
+
+.process-card:first-child {
+    border-top: none;
 }
 
 #filtros {

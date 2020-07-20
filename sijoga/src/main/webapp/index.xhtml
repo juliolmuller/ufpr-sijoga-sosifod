@@ -33,14 +33,15 @@
         </div>
 
         <h:panelGroup layout="block" styleClass="processes" style="margin-top: -10px; margin-bottom: 64px;">
-            <h4 class="py-3">Relatórios</h4>
+            <h4 class="py-3">Relatórios - Insira o intervalo de datas para relatórios em aberto</h4>
             <h:form prependId="false" styleClass="d-flex justify-content-between">
 
                 <h:commandButton id="btn-report" value="Gerar Relatório" action="#{reportBean.printReport(sessionScope.user.id,'Parte')}" rendered="#{sessionScope.user.role == 'Parte'}" />
 
-                <h:commandButton id="btn-repor-closed" value="Processos Encerrados" action="#{reportBean.printReport(sessionScope.user.id,'FechadosAd')}" rendered="#{sessionScope.user.role == 'Advogado'}" />
+                <h:commandButton id="btn-report-closed" value="Processos Encerrados" action="#{reportBean.printReport(sessionScope.user.id,'FechadosAd')}" rendered="#{sessionScope.user.role == 'Advogado'}" />
 
                 <h:panelGroup layout="block" rendered="#{sessionScope.user.role == 'Advogado'}">
+                    <h:commandButton id="btn-report-open" value="Processos Abertos" action="#{reportBean.printReport(sessionScope.user.id,'AbertosAd')}"/>
                     <h:inputText id="data-inicio" label="DATA INICIO" value="#{reportBean.data1}" styleClass="mask-date datepicker">
                         <f:validateRequired />
                         <f:convertDateTime pattern="dd/MM/yyyy" />
@@ -49,7 +50,6 @@
                         <f:validateRequired />
                         <f:convertDateTime pattern="dd/MM/yyyy" />
                     </h:inputText>
-                    <h:commandButton id="btn-report-open" value="Processos Abertos" action="#{reportBean.printReport(sessionScope.user.id,'AbertosAd')}"/>
                 </h:panelGroup>
             </h:form>
         </h:panelGroup>

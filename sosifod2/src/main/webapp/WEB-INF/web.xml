@@ -34,7 +34,6 @@
         <web-resource-collection>
             <web-resource-name>public</web-resource-name>
             <url-pattern>/login.xhtml</url-pattern>
-            <url-pattern>/cadastro.xhtml</url-pattern>
             <url-pattern>/resources/*</url-pattern>
             <url-pattern>/javax.faces.resource/*</url-pattern>
         </web-resource-collection>
@@ -52,6 +51,6 @@
         <session-timeout>30</session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>index.xhtml</welcome-file>
+        <welcome-file>login.xhtml</welcome-file>
     </welcome-file-list>
 </web-app>

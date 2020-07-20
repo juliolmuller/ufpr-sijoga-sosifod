@@ -1,10 +1,6 @@
 package com.lacussoft.sosifod.security;
 
 import com.lacussoft.sosifod.model.User;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
 import javax.faces.context.ExternalContext;
@@ -32,7 +28,6 @@ public class DatabaseIdentityStore implements IdentityStore {
         String password = upCredential.getPasswordAsString();
 
         User user = auth.validate(username, password);
-
         if (user == null) {
             return CredentialValidationResult.INVALID_RESULT;
         }
@@ -40,9 +35,6 @@ public class DatabaseIdentityStore implements IdentityStore {
         HttpSession session = (HttpSession) externalContext.getSession(true);
         session.setAttribute("user", user);
 
-        Set <String> setString = new HashSet<>();
-        setString.add("*");
-        
-        return new CredentialValidationResult(username, setString);
+        return new CredentialValidationResult(username);
     }
 }

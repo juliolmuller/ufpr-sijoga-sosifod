@@ -51,7 +51,7 @@ public class ReportBean implements Serializable {
         try {
             JasperReport JasperReport = JasperCompileManager.compileReport(jasperTemplate);
             Class.forName("org.postgresql.Driver");
-            conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/dac_sijoga", "postgres", "datascienz");
+            conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/dac_sijoga", "postgres", "postgres");
 
             Map parametros = new HashMap();
             parametros.put("parteId", id);

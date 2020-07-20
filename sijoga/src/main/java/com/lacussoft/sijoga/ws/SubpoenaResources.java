@@ -62,12 +62,12 @@ public class SubpoenaResources {
     private JsonValue generateJson(ProcessPhase phase) {
         Process process = phase.getProcess();
         JsonObjectBuilder json = Json.createObjectBuilder()
-            .add("id_processo", process.getId())
-            .add("desc_processo", process.getDescription())
-            .add("data_processo", process.getCreatedAt().toString())
-            .add("id_fase", phase.getId())
-            .add("titulo_fase", phase.getTitle())
-            .add("desc_fase", phase.getDescription())
+            .add("idProcesso", process.getId())
+            .add("descProcesso", process.getDescription())
+            .add("dataProcesso", process.getCreatedAt().toString())
+            .add("idFase", phase.getId())
+            .add("tituloFase", phase.getTitle())
+            .add("descFase", phase.getDescription())
             .add("juiz", generateJson(process.getJudge()))
             .add("promovente", generateJson(process.getPromoter()))
             .add("intimado", generateJson(process.getPromoted()));

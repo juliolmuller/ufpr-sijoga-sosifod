@@ -25,18 +25,6 @@ $(function () {
     $('.mask-int').mask('000.000');
 
     $('.datepicker').datepicker({
-        format: 'dd/mm/yyyy',
-        endDate: '-18y'
+        format: 'dd/mm/yyyy'
     });
-
-    $('[name="role"]').change(function() {
-        var role = $(this).val();
-        var oabField = $('#oabField');
-        if (role === 'ADVOGADO') {
-            $(oabField).show();
-        } else {
-            $(oabField).hide();
-        }
-    });
-
 });

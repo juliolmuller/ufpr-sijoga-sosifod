@@ -1,7 +1,6 @@
 package com.lacussoft.sosifod.bean;
 
 import com.lacussoft.sosifod.security.AuthenticationBean;
-import java.io.IOException;
 import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
@@ -25,11 +24,18 @@ public class LoginBean implements Serializable {
 
     public String login() {
         AuthenticationStatus status = auth.attempt(cpf, password);
+
         if (status.equals(AuthenticationStatus.SUCCESS)) {
             return "index?faces-redirect=true";
         }
 
         return "login?error=true";
+    }
+
+    public String logout() {
+        auth.logout();
+        externalContext.invalidateSession();
+        return "login?faces-redirect=true";
     }
 
     public String getCpf() {

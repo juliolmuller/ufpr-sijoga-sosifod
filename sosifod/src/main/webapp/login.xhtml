@@ -23,6 +23,7 @@
                     <h:outputLabel for="cpf" value="CPF:" styleClass="login-form-label" />
                     <h:inputText id="cpf" value="#{loginBean.cpf}" styleClass="login-form-control mask-cpf" pt:autofocus="true">
                         <f:validateRequired />
+                        <f:converter converterId="numbersOnly" />
                     </h:inputText>
                 </div>
                 <div class="mt-3">

@@ -2,17 +2,24 @@ package com.lacussoft.sosifod.model;
 
 import com.lacussoft.utils.SecurityUtil;
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "tb_usuarios")
-public class User implements Serializable {
+public class User implements Model {
 
-    private static final String HASH_PREFIX = "@SOSIFOD::";
+     private static final String HASH_PREFIX = "@SOSIFOD::";
     
     @Id
     @GeneratedValue
@@ -36,13 +43,13 @@ public class User implements Serializable {
     public User() {}
 
     public User(String cpf, String name, String email, String password, boolean isAdmin) {
-        this.password = password;
-        this.isAdmin = isAdmin;
+        this.cpf = cpf;
         this.name = name;
         this.email = email;
-        this.cpf = cpf;
+        this.password = password;
+        this.isAdmin = isAdmin;
     }
-
+    
     public static String hashPassword(String plainPassword) {
         if (plainPassword.startsWith(HASH_PREFIX)) {
             return plainPassword;

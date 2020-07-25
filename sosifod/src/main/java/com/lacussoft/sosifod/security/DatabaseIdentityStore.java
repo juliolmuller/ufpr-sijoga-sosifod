@@ -28,7 +28,6 @@ public class DatabaseIdentityStore implements IdentityStore {
         String password = upCredential.getPasswordAsString();
 
         User user = auth.validate(username, password);
-
         if (user == null) {
             return CredentialValidationResult.INVALID_RESULT;
         }

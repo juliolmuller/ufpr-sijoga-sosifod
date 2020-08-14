@@ -1,28 +1,58 @@
+<h1 align="center">
+  :balance_scale:: SIJOGA & SOSIFOD - Judicial Systems
+</h1>
 
-# SIJOGA & SOSIFOD
+- **Project proposed by:** college assignment
+- **Project developed by:** [Julio L. Muller](https://github.com/juliolmuller) and other [3 contributors](https://github.com/juliolmuller/sistemas-dac/graphs/contributors)
+- **Released on:** Jul 25, 2020
+- **Updated on:** Jul 25, 2020
+- **Latest version:** 0.1.0
+- **License:** MIT
 
-## Configuração do ambiente:
+![Screenshot of SIJOGA system](./app-overview-2.jpeg)
 
-- JDK 1.8 [link para download](https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html)
-- NetBeans 11.3 [Windows](https://downloads.apache.org/netbeans/netbeans/11.3/Apache-NetBeans-11.3-bin-windows-x64.exe) [Linux](https://downloads.apache.org/netbeans/netbeans/11.3/Apache-NetBeans-11.3-bin-linux-x64.sh) [MaxOS](https://downloads.apache.org/netbeans/netbeans/11.3/Apache-NetBeans-11.3-bin-macosx.dmg)
-- GlaskFish 5.1 [link para download](https://projects.eclipse.org/projects/ee4j.glassfish/downloads) (baixar a versão **FULL**)
-- PostgreSQL 11/12 [link para download](https://www.postgresql.org/download/)
+Judicial systems developed on Jakarta EE as part of college assignment. The objective was to develop 2 separate systems using the frameworks JSF and Hibernate to practice these technologies as well as the integration among them, using REST API.
 
-**Instruções:**
-- Instalar o *JDK* e configurar o `JAVA_HOME` (mesma coisa do semestre passado);
-- Instalar o *NetBeans* (sem segredos);
-- Extrair os arquivos compactados do *GlassFish* em algum diretório com as devidas permissões;
-- Abrir o *NetBeans* e configurar o *GlassFish* como um servidor de aplicação: acesse o menu *Tools > Servers* e clique em *Add server...*. Siga o assitente de configuração do servidor (em determinado momento você deverá informar o diretório onde o *GlassFish fo extraído*)
-- Importe os projetos e seja feliz!!!
+## :trophy: Lessons Learned
 
-:warning: *Vocês não devem ter problemas importando projetos, mas a criação de novos projetos parece ficar restrita à utilização de gerenciadores de dependências nessa versão do* NetBeans. *Eu criei os projetos com* **Maven**, *mas se vocês descobrirem como criar um projeto do jeito "clássico", compartilhe.*
+- Worked with Maven projects;
+- Experienced CDI and EJB technologies;
+- Integrated front and back end with JavaSever Faces framework, using managed beans, validators, converters and XHTML;
+- Integrated Hibernate persistence framework within web applications;
+- Created REST API with JAX-RS for data exchange through applications;
+- Created HTTP client to consume the web service;
+- Experienced with Jakarta EE Security API;
 
-## Configuração do banco de dados e Hibernate
+## :hammer: Technologies & Resources
 
-Para fazer a configuração do banco de dados, crie os dois database (um para cada sistema) no PostgreSQL. Eu estou usando em minha máquina o `dac_sijoga` e o `dac_sosifod`.
+**Frontend:**
+- Bootstrap 4 (for styling)
+- jQuery (for DOM manipulation and AJAX)
+- JSF 2 components
 
-O arquivo de configuração do *Hibernate* usado pelo projeto **não é armazenada no repositório**, pois ele contém dados locais, como usuário e senha para conectar ao banco, que vai ser diferente para cada pessoa. Contudo, eucriei uma cópia com extensão `*.example`, que deve ser copiada e renomeada sem essa extensão. Aí, nesse arquivo `hibernate.cfg.xml` você deve inserir os dados do seu banco, por isso, verifique a URL da JDBC (inclusive o nome do banco) e as credenciais (usuário e senha) de acesso.
+**Backend:**
+- JDK 1;8
+- PostgreSQL 11/12
+- GlassFish Server 5.1 (Jakarte EE 8 implementation)
+- JSF 2.3
+- Hibernate 4.3
+- Jasper Reports 6
 
-O arquivo de exemplo está na pasta `<projeto>/src/main/resources`, e a cópia deve ser feita nessa pasta mesmo, que é onde o *Hibernate* vai buscar no momento que a aplicação iniciar.
+**Development:**
+- Apache NetBeans 11.3
+- Apache Maven (NetBeans integrated)
 
-**Não é necessário rodar scripts CREATE TABLE**. Com a propriedade `hibernate.hbm2ddl.auto` do *Hibernate* marcada como `create`, todo esquema de tabelas é recriado quando a aplicação é iniciada, a partir da configuração das classes-entidades.
+## :zap: Features
+
+- Authentication;
+- Multiple authorization roles: Judge, Lawyer and Party (in SIJOGA); and Officer and Admin (in SOSIFOD);
+- Auto sign-up for lawyers and judges;
+- Data validation;
+- PDF reports (in SIJOGA);
+- Friendly and intuitive UI;
+
+## :bell: Setting up the Environment
+
+To run any of the applications of this project, besides the development resources and JDK listed above, you will need to configure the `hibernate.cfg.xml` file with your local  database information in BOTH systems, since they are completely separate and running in different database instances. To do that, access `[project]/src/main/resources/` and create a copy of file `hibernate.cfg.xml.example` renaming it as `hibernate.cfg.xml` (without the **.example**), and update this copy with your local connection information.
+
+Hibernate is configured to create the database schema whenever the application is deployed, so don't worry about running SQL scripts besides the `CREATE DATABASE`.

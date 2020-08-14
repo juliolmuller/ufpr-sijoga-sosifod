@@ -1,5 +1,5 @@
 <h1 align="center">
-  :balance_scale:: SIJOGA & SOSIFOD - Judicial Systems
+  :balance_scale: SIJOGA & SOSIFOD - Judicial Systems
 </h1>
 
 - **Project proposed by:** college assignment

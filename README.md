@@ -6,7 +6,7 @@
   <a href="#trophy-lessons-learned">Lessons Learned</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#rocket-technologies--resources">Technologies</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#hammer-setting-up-the-environment">Environment Setup</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#zap-features-implementations">Features</a>
+  <a href="#zap-features">Features</a>
 </p>
 
 <p align="center">
@@ -54,7 +54,7 @@ Judicial systems developed on Jakarta EE as part of college assignment. The obje
 - Apache NetBeans 11.3
 - Apache Maven (NetBeans integrated)
 
-## :hummer: Setting up the Environment
+## :hammer: Setting up the Environment
 
 To run any of the applications of this project, besides the development resources and JDK listed above, you will need to configure the `hibernate.cfg.xml` file with your local  database information in BOTH systems, since they are completely separate and running in different database instances. To do that, access `[project]/src/main/resources/` and create a copy of file `hibernate.cfg.xml.example` renaming it as `hibernate.cfg.xml` (without the **.example**), and update this copy with your local connection information.
 

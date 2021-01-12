@@ -21,7 +21,7 @@
 
 **Project developed by:** [Julio L. Muller](https://github.com/juliolmuller) and other [3 contributors](https://github.com/juliolmuller/sistemas-dac/graphs/contributors)
 
-![Screenshot of SIJOGA system](./app-overview-2.jpeg)
+![Screenshot of SIJOGA system](./.github/app-overview-2.jpeg)
 
 Judicial systems developed on Jakarta EE as part of college assignment. The objective was to develop 2 separate systems using the frameworks JSF and Hibernate to practice these technologies as well as the integration among them, using REST API.
 
